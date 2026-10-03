@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>CareConnect nutzt deinen Standort, damit Patienten sehen, wann du ankommst.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>CareConnect nutzt deinen Standort, damit Patienten sehen, wann du ankommst.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>CareConnect braucht Zugriff auf deine Fotos für das Profilbild.</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>tel</string>
+		<string>mailto</string>
+	</array>
+</dict>
+</plist>
