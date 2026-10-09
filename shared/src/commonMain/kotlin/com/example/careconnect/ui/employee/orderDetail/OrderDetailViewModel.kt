@@ -2,19 +2,21 @@ package com.example.careconnect.ui.employee.orderDetail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.careconnect.domain.model.CompletionReport
 import com.example.careconnect.domain.model.Coordinate
 import com.example.careconnect.domain.model.Employee
 import com.example.careconnect.domain.model.Order
 import com.example.careconnect.domain.model.OrderState
 import com.example.careconnect.domain.model.Patient
 import com.example.careconnect.domain.model.RouteInfo
+import com.example.careconnect.domain.model.isSameRouteRequest
 import com.example.careconnect.domain.repository.AuthRepository
 import com.example.careconnect.domain.repository.EmployeeRepository
 import com.example.careconnect.domain.repository.GeoRepository
 import com.example.careconnect.domain.repository.LocationRepository
 import com.example.careconnect.domain.repository.OrderRepository
 import com.example.careconnect.domain.repository.PatientRepository
-import com.example.careconnect.location.TrackingManager
+import com.example.careconnect.i18n.tr
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -35,7 +37,6 @@ import kotlinx.coroutines.launch
 class OrderDetailViewModel(
     private val orderRepo: OrderRepository,
     private val authRepo: AuthRepository,
-    private val trackingManager: TrackingManager,
     patientRepo: PatientRepository,
     employeeRepo: EmployeeRepository,
     locationRepo: LocationRepository,
@@ -44,16 +45,32 @@ class OrderDetailViewModel(
 
     private val orderId = MutableStateFlow<String?>(null)
 
+    val currentUserId: String? = authRepo.currentUserId
+
+    private val myName: StateFlow<String> = (currentUserId?.let { employeeRepo.getEmployee(it) } ?: flowOf(null))
+        .map { it?.name ?: "" }
+        .stateIn(viewModelScope, SharingStarted.Eagerly, "")
+
     private val _isProcessing = MutableStateFlow(false)
     val isProcessing = _isProcessing.asStateFlow()
 
     private val _errorMessage = MutableStateFlow<String?>(null)
     val errorMessage = _errorMessage.asStateFlow()
 
-    val order: StateFlow<Order?> = orderId
+    // null = lädt noch, OrderLoad(null) = nicht gefunden
+    private val loaded: StateFlow<OrderLoad?> = orderId
         .filterNotNull()
-        .flatMapLatest { orderRepo.getOrder(it) }
+        .flatMapLatest { id -> orderRepo.getOrder(id).map { OrderLoad(it) } }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
+
+    val order: StateFlow<Order?> = loaded
+        .map { it?.order }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
+
+    // Auftrag wurde gelöscht oder existiert nicht
+    val notFound: StateFlow<Boolean> = loaded
+        .map { it != null && it.order == null }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
 
     val patient: StateFlow<Patient?> = order
         .map { it?.patientId ?: "" }
@@ -85,6 +102,7 @@ class OrderDetailViewModel(
     val route: StateFlow<RouteInfo?> = combine(employeeCoordinate, patientCoordinate) { employee, patient ->
         employee to patient
     }
+        .distinctUntilChanged(::isSameRouteRequest)
         .mapLatest { (employee, patient) ->
             if (employee == null || patient == null) null
             else geoRepo.getRoute(employee, patient).getOrNull()
@@ -98,25 +116,30 @@ class OrderDetailViewModel(
     fun accept() {
         val id = orderId.value ?: return
         val employeeId = authRepo.currentUserId ?: return
-        runAction("Fehler beim Annehmen") {
-            orderRepo.acceptOrder(id, employeeId).also { result ->
-                if (result.isSuccess) trackingManager.start(employeeId)
-            }
+        runAction(tr("Fehler beim Annehmen")) {
+            orderRepo.acceptOrder(id, employeeId)
         }
     }
 
-    fun complete() {
+    // Abschließen mit Leistungsnachweis
+    fun complete(note: String, signature: String, signedBy: String) {
         val id = orderId.value ?: return
-        runAction("Fehler beim Abschließen") {
-            orderRepo.completeOrder(id).also { result ->
-                if (result.isSuccess) trackingManager.stop()
-            }
+        val report = CompletionReport(
+            note = note.trim(),
+            signature = signature,
+            signedBy = signedBy.trim(),
+            completedAt = null,
+            completedBy = currentUserId ?: "",
+            completedByName = myName.value
+        )
+        runAction(tr("Fehler beim Abschließen")) {
+            orderRepo.completeOrder(id, report)
         }
     }
 
     fun delete(onDeleted: () -> Unit) {
         val id = orderId.value ?: return
-        runAction("Fehler beim Löschen") {
+        runAction(tr("Fehler beim Löschen")) {
             orderRepo.deleteOrder(id).also { result ->
                 if (result.isSuccess) onDeleted()
             }
