@@ -5,12 +5,12 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Looper
+import com.example.careconnect.domain.model.Coordinate
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
-import com.example.careconnect.domain.model.Coordinate
 
 class AndroidLocationTracker(
     private val context: Context
@@ -21,13 +21,18 @@ class AndroidLocationTracker(
 
     @SuppressLint("MissingPermission")
     override fun start(onLocation: (Coordinate) -> Unit) {
-        // Ohne Berechtigung nichts machen, MainActivity fragt beim Start danach
+        // Ohne Berechtigung nichts machen, MainActivity fragt danach, sobald getrackt wird
         if (!hasPermission()) return
 
         stop()
-        val request = LocationRequest.Builder(Priority.PRIORITY_BALANCED_POWER_ACCURACY, 10_000L)
-            .setMinUpdateDistanceMeters(50f)
+        val request = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 10_000L)
+            .setMinUpdateDistanceMeters(15f)
             .build()
+
+        // Letzten bekannten Standort sofort schicken, damit der Patient nicht warten muss
+        client.lastLocation.addOnSuccessListener { location ->
+            if (location != null) onLocation(Coordinate(location.latitude, location.longitude))
+        }
 
         val newCallback = object : LocationCallback() {
             override fun onLocationResult(result: LocationResult) {
