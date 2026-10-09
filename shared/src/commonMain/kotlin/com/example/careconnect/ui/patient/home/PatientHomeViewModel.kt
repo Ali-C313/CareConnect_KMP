@@ -8,6 +8,7 @@ import com.example.careconnect.domain.model.Patient
 import com.example.careconnect.domain.repository.AuthRepository
 import com.example.careconnect.domain.repository.OrderRepository
 import com.example.careconnect.domain.repository.PatientRepository
+import com.example.careconnect.i18n.tr
 import com.example.careconnect.util.currentTimeMillis
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -41,8 +42,8 @@ class PatientHomeViewModel(
             val order = Order(
                 id = "",
                 state = OrderState.OFFEN,
-                notes = listOf("Automatisch generierter Notfallauftrag"),
-                description = "Notfallauftrag",
+                notes = listOf(tr("Automatisch generierter Notfallauftrag")),
+                description = tr("Notfallauftrag"),
                 patientId = id,
                 patientName = current?.name ?: "",
                 createdBy = id,
@@ -50,8 +51,8 @@ class PatientHomeViewModel(
                 createdAt = currentTimeMillis()
             )
             orderRepo.createOrder(order)
-                .onSuccess { _message.update { "Der Notfallauftrag wurde erstellt. Ein Mitarbeiter kümmert sich darum." } }
-                .onFailure { e -> _message.update { "Fehler beim Erstellen des Notfallauftrags: ${e.message}" } }
+                .onSuccess { _message.update { tr("Der Notfallauftrag wurde erstellt. Ein Mitarbeiter kümmert sich darum.") } }
+                .onFailure { e -> _message.update { tr("Fehler beim Erstellen des Notfallauftrags: {0}", e.message) } }
         }
     }
 
