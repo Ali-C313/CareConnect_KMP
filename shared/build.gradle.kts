@@ -42,7 +42,7 @@ kotlin {
             implementation(libs.koin.android)
 
             // Karte & Standort
-            implementation(libs.maps.compose)
+            implementation(libs.osmdroid)
             implementation(libs.play.services.location)
         }
         iosMain.dependencies {
