@@ -25,13 +25,17 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.careconnect.i18n.tr
+import com.example.careconnect.mock.repository.EmployeeRepositoryMock
+import com.example.careconnect.mock.repository.OrderRepositoryMock
+import com.example.careconnect.mock.repository.PatientRepositoryMock
 import com.example.careconnect.ui.components.AvatarView
 import com.example.careconnect.ui.components.CareTopBar
 import com.example.careconnect.ui.components.SectionCard
+import com.example.careconnect.ui.theme.CareConnectTheme
 import com.example.careconnect.util.StringHelper
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -51,12 +55,12 @@ fun SearchScreen(
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
     ) {
-        CareTopBar(title = "Suche", onBack = onBack)
+        CareTopBar(title = tr("Suche"), onBack = onBack)
 
         OutlinedTextField(
             value = query,
             onValueChange = viewModel::onQueryChange,
-            placeholder = { Text("Suche Mitarbeiter, Patienten, Aufträge…") },
+            placeholder = { Text(tr("Suche Mitarbeiter, Patienten, Aufträge…")) },
             leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
             singleLine = true,
             shape = RoundedCornerShape(12.dp),
@@ -69,7 +73,7 @@ fun SearchScreen(
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            item { SectionTitle("Mitarbeiter") }
+            item { SectionTitle(tr("Mitarbeiter")) }
             items(results.employees, key = { "e_${it.id}" }) { employee ->
                 SectionCard(modifier = Modifier.clickable { onEmployeeClick(employee.id) }) {
                     Row(
@@ -84,7 +88,7 @@ fun SearchScreen(
                         Column {
                             Text(employee.name, fontWeight = FontWeight.Bold)
                             Text(
-                                employee.role,
+                                tr(employee.role),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
@@ -93,7 +97,7 @@ fun SearchScreen(
                 }
             }
 
-            item { SectionTitle("Patienten") }
+            item { SectionTitle(tr("Patienten")) }
             items(results.patients, key = { "p_${it.id}" }) { patient ->
                 ResultRow(
                     icon = Icons.Default.Person,
@@ -103,11 +107,11 @@ fun SearchScreen(
                 )
             }
 
-            item { SectionTitle("Aufträge") }
+            item { SectionTitle(tr("Aufträge")) }
             items(results.orders, key = { "o_${it.id}" }) { order ->
                 ResultRow(
                     icon = Icons.Default.Description,
-                    title = "Auftrag: ${order.patientName.ifEmpty { "Unbekannt" }}",
+                    title = tr("Auftrag: {0}", order.patientName.ifEmpty { tr("Unbekannt") }),
                     subtitle = order.description,
                     onClick = { onOrderClick(order.id) }
                 )
@@ -116,45 +120,20 @@ fun SearchScreen(
     }
 }
 
-@Composable
-private fun SectionTitle(title: String) {
-    Text(
-        text = title,
-        style = MaterialTheme.typography.titleSmall,
-        color = MaterialTheme.colorScheme.onSurfaceVariant,
-        modifier = Modifier.padding(top = 8.dp)
-    )
-}
-
-@Composable
-private fun ResultRow(
-    icon: ImageVector,
-    title: String,
-    subtitle: String,
-    onClick: () -> Unit
-) {
-    SectionCard(modifier = Modifier.clickable(onClick = onClick)) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            Icon(icon, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
-            Column {
-                Text(title, fontWeight = FontWeight.Bold)
-                if (subtitle.isNotEmpty()) {
-                    Text(
-                        subtitle,
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                }
-            }
-        }
-    }
-}
-
 @Preview
 @Composable
 fun SearchScreenPreview() {
-    SearchScreen(onBack = {}, onEmployeeClick = {}, onPatientClick = {}, onOrderClick = {})
+    CareConnectTheme(darkTheme = false) {
+        SearchScreen(
+            onBack = {},
+            onEmployeeClick = {},
+            onPatientClick = {},
+            onOrderClick = {},
+            viewModel = SearchViewModel(
+                EmployeeRepositoryMock(),
+                PatientRepositoryMock(),
+                OrderRepositoryMock()
+            )
+        )
+    }
 }
