@@ -13,4 +13,6 @@ actual val platformModule: Module = module {
         }
     }
     single<LocationTracker> { AndroidLocationTracker(androidContext()) }
+    single<PlatformGeocoder> { AndroidGeocoder(androidContext()) }
+    single<Notifier> { AndroidNotifier(androidContext()) }
 }
