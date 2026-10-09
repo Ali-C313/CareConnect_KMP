@@ -9,62 +9,40 @@ import com.example.careconnect.remote.model.PatientDto
 import com.example.careconnect.remote.model.PatientProfileUpdateDto
 import com.example.careconnect.remote.model.toDto
 import com.example.careconnect.remote.model.toPatient
-import com.example.careconnect.remote.model.toTimestamp
+import com.example.careconnect.remote.org
+import com.example.careconnect.session.OrgSession
 import dev.gitlive.firebase.firestore.FirebaseFirestore
-import dev.gitlive.firebase.firestore.Timestamp
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 
 class PatientRepositoryImpl(
-    private val db: FirebaseFirestore
+    private val db: FirebaseFirestore,
+    private val session: OrgSession
 ) : PatientRepository {
 
-    private val patientsRef = db.collection(CollectionNames.PATIENTS)
+    private fun patientsRef(orgId: String = session.requireOrgId()) =
+        db.org(orgId).collection(CollectionNames.PATIENTS)
 
-    override fun getPatients(): Flow<List<Patient>> = patientsRef.snapshots
-        .map { snapshot ->
-            snapshot.documents
-                .mapNotNull { doc ->
-                    runCatching { doc.data<PatientDto>().toPatient(doc.id) }.getOrNull()
-                }
-                .sortedBy { it.name }
-        }
-        .catch { emit(emptyList()) }
+    override fun getPatients(): Flow<List<Patient>> = session.inOrg(emptyList()) { orgId ->
+        patientsRef(orgId).snapshots
+            .map { snapshot ->
+                snapshot.documents
+                    .mapNotNull { doc ->
+                        runCatching { doc.data<PatientDto>().toPatient(doc.id) }.getOrNull()
+                    }
+                    .sortedBy { it.name }
+            }
+            .catch { emit(emptyList()) }
+    }
 
-    override fun getPatient(id: String): Flow<Patient?> = patientsRef.document(id).snapshots
-        .map { doc ->
-            if (!doc.exists) null
-            else runCatching { doc.data<PatientDto>().toPatient(doc.id) }.getOrNull()
-        }
-        .catch { emit(null) }
-
-    override suspend fun createPatient(
-        uid: String,
-        firstName: String,
-        lastName: String,
-        email: String,
-        birthDate: Long?,
-        address: String,
-        city: String,
-        phone: String,
-        profileImageUrl: String
-    ): Result<Unit> = runCatching {
-        val dto = PatientDto(
-            uid = uid,
-            firstName = firstName,
-            lastName = lastName,
-            email = email,
-            birthDate = birthDate?.toTimestamp(),
-            address = address,
-            city = city,
-            phone = phone,
-            notes = "",
-            age = 0,
-            profileImageURL = profileImageUrl,
-            createdAt = Timestamp.now()
-        )
-        patientsRef.document(uid).set(PatientDto.serializer(), dto, merge = true)
+    override fun getPatient(id: String): Flow<Patient?> = session.inOrg(null) { orgId ->
+        patientsRef(orgId).document(id).snapshots
+            .map { doc ->
+                if (!doc.exists) null
+                else runCatching { doc.data<PatientDto>().toPatient(doc.id) }.getOrNull()
+            }
+            .catch { emit(null) }
     }
 
     override suspend fun updateProfile(patient: Patient): Result<Unit> = runCatching {
@@ -78,17 +56,17 @@ class PatientRepositoryImpl(
             allergies = patient.allergies,
             medicalHistory = patient.medicalHistory
         )
-        patientsRef.document(patient.id).set(PatientProfileUpdateDto.serializer(), dto, merge = true)
+        patientsRef().document(patient.id).set(PatientProfileUpdateDto.serializer(), dto, merge = true)
     }
 
     override suspend fun updateProfileImage(id: String, url: String): Result<Unit> = runCatching {
-        patientsRef.document(id).updateFields {
+        patientsRef().document(id).updateFields {
             "profileImageURL" to url
         }
     }
 
     override suspend fun saveEmergencyContact(id: String, contact: EmergencyContact): Result<Unit> = runCatching {
-        patientsRef.document(id).set(
+        patientsRef().document(id).set(
             EmergencyContactUpdateDto.serializer(),
             EmergencyContactUpdateDto(contact.toDto()),
             merge = true
