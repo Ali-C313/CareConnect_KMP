@@ -23,12 +23,18 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.careconnect.i18n.tr
+import com.example.careconnect.mock.repository.AuthRepositoryMock
+import com.example.careconnect.mock.repository.EmployeeRepositoryMock
+import com.example.careconnect.mock.repository.StorageRepositoryMock
 import com.example.careconnect.ui.components.CareTextField
 import com.example.careconnect.ui.components.CareTopBar
 import com.example.careconnect.ui.components.ChangePasswordCard
 import com.example.careconnect.ui.components.ProfileImagePicker
 import com.example.careconnect.ui.components.SectionCard
+import com.example.careconnect.ui.theme.CareConnectTheme
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
@@ -45,14 +51,14 @@ fun EditEmployeeProfileScreen(
             .background(MaterialTheme.colorScheme.background)
     ) {
         CareTopBar(
-            title = "Profil bearbeiten",
+            title = tr("Profil bearbeiten"),
             onBack = onBack,
             actions = {
                 if (uiState.isSaving) {
                     CircularProgressIndicator(Modifier.padding(end = 12.dp).size(24.dp))
                 } else {
                     TextButton(onClick = { viewModel.save(onSuccess = onBack) }) {
-                        Text("Speichern")
+                        Text(tr("Speichern"))
                     }
                 }
             }
@@ -73,12 +79,12 @@ fun EditEmployeeProfileScreen(
                 )
             }
 
-            SectionCard(title = "Allgemein", icon = Icons.Default.Badge) {
-                CareTextField("Vorname", uiState.firstName, viewModel::onFirstNameChange, icon = Icons.Default.Person)
-                CareTextField("Nachname", uiState.lastName, viewModel::onLastNameChange, icon = Icons.Default.Person)
-                CareTextField("Rolle", uiState.role, viewModel::onRoleChange, icon = Icons.Default.Work)
+            SectionCard(title = tr("Allgemein"), icon = Icons.Default.Badge) {
+                CareTextField(tr("Vorname"), uiState.firstName, viewModel::onFirstNameChange, icon = Icons.Default.Person)
+                CareTextField(tr("Nachname"), uiState.lastName, viewModel::onLastNameChange, icon = Icons.Default.Person)
+                CareTextField(tr("Rolle"), uiState.role, viewModel::onRoleChange, icon = Icons.Default.Work)
                 CareTextField(
-                    "E-Mail",
+                    tr("E-Mail"),
                     uiState.email,
                     viewModel::onEmailChange,
                     icon = Icons.Default.Email,
@@ -102,9 +108,24 @@ fun EditEmployeeProfileScreen(
     uiState.message?.let { message ->
         AlertDialog(
             onDismissRequest = viewModel::dismissMessage,
-            title = { Text("Hinweis") },
+            title = { Text(tr("Hinweis")) },
             text = { Text(message) },
             confirmButton = { TextButton(onClick = viewModel::dismissMessage) { Text("OK") } }
+        )
+    }
+}
+
+@Preview
+@Composable
+fun EditEmployeeProfileScreenPreview() {
+    CareConnectTheme(darkTheme = false) {
+        EditEmployeeProfileScreen(
+            onBack = {},
+            viewModel = EditEmployeeProfileViewModel(
+                EmployeeRepositoryMock(),
+                StorageRepositoryMock(),
+                AuthRepositoryMock()
+            )
         )
     }
 }
