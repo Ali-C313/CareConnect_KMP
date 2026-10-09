@@ -6,8 +6,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Medication
 import androidx.compose.material.icons.filled.LocalPharmacy
+import androidx.compose.material.icons.filled.Medication
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -21,10 +21,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.careconnect.domain.model.TimeOfDay
+import com.example.careconnect.i18n.tr
 import com.example.careconnect.ui.components.CareTextField
 import com.example.careconnect.ui.components.FilterTabs
+import com.example.careconnect.ui.theme.CareConnectTheme
 
 /**
  * Sheet "Medikament hinzufügen".
@@ -48,15 +51,15 @@ fun AddMedicineSheet(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Text(
-                text = "Medikament hinzufügen",
+                text = tr("Medikament hinzufügen"),
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold
             )
 
-            CareTextField("Name", name, { name = it }, icon = Icons.Default.Medication)
-            CareTextField("Dosierung", dosage, { dosage = it }, icon = Icons.Default.LocalPharmacy)
+            CareTextField(tr("Name"), name, { name = it }, icon = Icons.Default.Medication)
+            CareTextField(tr("Dosierung"), dosage, { dosage = it }, icon = Icons.Default.LocalPharmacy)
 
-            Text("Einnahmezeit", style = MaterialTheme.typography.labelLarge)
+            Text(tr("Einnahmezeit"), style = MaterialTheme.typography.labelLarge)
             FilterTabs(
                 options = TimeOfDay.entries,
                 selected = selectedTime,
@@ -66,7 +69,7 @@ fun AddMedicineSheet(
 
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 OutlinedButton(onClick = onDismiss, modifier = Modifier.weight(1f)) {
-                    Text("Abbrechen")
+                    Text(tr("Abbrechen"))
                 }
                 Button(
                     onClick = {
@@ -76,9 +79,17 @@ fun AddMedicineSheet(
                     enabled = name.isNotBlank() && dosage.isNotBlank(),
                     modifier = Modifier.weight(1f)
                 ) {
-                    Text("Speichern")
+                    Text(tr("Speichern"))
                 }
             }
         }
+    }
+}
+
+@Preview
+@Composable
+fun AddMedicineSheetPreview() {
+    CareConnectTheme(darkTheme = false) {
+        AddMedicineSheet(onDismiss = {}, onSave = { _, _, _ -> })
     }
 }
