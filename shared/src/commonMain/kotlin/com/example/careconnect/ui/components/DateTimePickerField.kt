@@ -27,7 +27,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.careconnect.i18n.tr
+import com.example.careconnect.mock.MockData
+import com.example.careconnect.ui.theme.CareConnectTheme
 import com.example.careconnect.util.combineDateAndTime
 import com.example.careconnect.util.hour
 import com.example.careconnect.util.minute
@@ -103,7 +107,7 @@ fun DateTimePickerField(
                 }) { Text("OK") }
             },
             dismissButton = {
-                TextButton(onClick = { showDatePicker = false }) { Text("Abbrechen") }
+                TextButton(onClick = { showDatePicker = false }) { Text(tr("Abbrechen")) }
             }
         ) {
             DatePicker(state = dateState)
@@ -127,11 +131,23 @@ fun DateTimePickerField(
                 }) { Text("OK") }
             },
             dismissButton = {
-                TextButton(onClick = { showTimePicker = false }) { Text("Abbrechen") }
+                TextButton(onClick = { showTimePicker = false }) { Text(tr("Abbrechen")) }
             },
             text = {
                 TimePicker(state = timeState)
             }
+        )
+    }
+}
+
+@Preview
+@Composable
+fun DateTimePickerFieldPreview() {
+    CareConnectTheme(darkTheme = false) {
+        DateTimePickerField(
+            label = "Datum & Uhrzeit",
+            millis = MockData.orders.first().dueDate ?: 0L,
+            onValueChange = {}
         )
     }
 }
