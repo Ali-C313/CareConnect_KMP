@@ -1,18 +1,6 @@
 package com.example.careconnect.domain.model
 
-data class Medication(
-    val id: String,
-    val name: String
-)
-
-data class EmergencyContact(
-    val name: String = "",
-    val relation: String = "",
-    val phone: String = "",
-    val email: String = "",
-    val address: String = "",
-    val age: Int? = null
-)
+import com.example.careconnect.i18n.tr
 
 data class Patient(
     val id: String,
@@ -30,7 +18,8 @@ data class Patient(
     val profileImageUrl: String = "",
     val medications: List<Medication> = emptyList(),
     val history: List<String> = emptyList(),
-    val emergencyContact: EmergencyContact? = null
+    val emergencyContact: EmergencyContact? = null,
+    val linkedOrgs: List<LinkedOrg> = emptyList()
 ) {
     // Vor- und Nachname, sonst E-Mail
     val name: String
@@ -38,7 +27,7 @@ data class Patient(
             val full = listOf(firstName.trim(), lastName.trim())
                 .filter { it.isNotEmpty() }
                 .joinToString(" ")
-            return full.ifEmpty { email.ifEmpty { "Unbekannt" } }
+            return full.ifEmpty { email.ifEmpty { tr("Unbekannt") } }
         }
 
     // Adresse + Stadt für Karte und Maps
