@@ -1,23 +1,19 @@
 package com.example.careconnect.ui.employee.orders
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -25,7 +21,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.careconnect.domain.model.Order
 import com.example.careconnect.domain.model.OrderState
+import com.example.careconnect.i18n.tr
+import com.example.careconnect.mock.MockData
 import com.example.careconnect.ui.components.SectionCard
+import com.example.careconnect.ui.theme.CareConnectTheme
 import com.example.careconnect.ui.theme.color
 import com.example.careconnect.util.toDateTimeString
 
@@ -73,7 +72,7 @@ fun OrderCard(
             )
         } else {
             Text(
-                text = "Keine Beschreibung vorhanden.",
+                text = tr("Keine Beschreibung vorhanden."),
                 style = MaterialTheme.typography.bodyMedium,
                 fontStyle = FontStyle.Italic,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -81,45 +80,16 @@ fun OrderCard(
         }
 
         order.dueDate?.let { dueDate ->
-            SmallInfo(Icons.Default.CalendarMonth, "Fällig: ${dueDate.toDateTimeString()}")
+            SmallInfo(Icons.Default.CalendarMonth, tr("Fällig: {0}", dueDate.toDateTimeString()))
         }
         SmallInfo(Icons.Default.Person, employeeName)
-    }
-}
-
-@Composable
-private fun SmallInfo(
-    icon: ImageVector,
-    text: String
-) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(6.dp)
-    ) {
-        Icon(
-            icon,
-            contentDescription = null,
-            tint = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.size(16.dp)
-        )
-        Text(
-            text = text,
-            style = MaterialTheme.typography.labelMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
-        )
     }
 }
 
 @Preview
 @Composable
 fun OrderCardPreview() {
-    OrderCard(
-        order = Order(
-            id = "preview",
-            state = OrderState.OFFEN,
-            description = "Blutdruck kontrollieren und Medikamente auffüllen.",
-            patientName = "Berta Landmann"
-        ),
-        employeeName = "Noch offen"
-    )
+    CareConnectTheme(darkTheme = false) {
+        OrderCard(order = MockData.orders[1], employeeName = "Noch offen")
+    }
 }
