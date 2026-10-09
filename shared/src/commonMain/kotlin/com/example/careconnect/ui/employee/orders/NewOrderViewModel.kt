@@ -8,6 +8,7 @@ import com.example.careconnect.domain.model.Patient
 import com.example.careconnect.domain.repository.AuthRepository
 import com.example.careconnect.domain.repository.OrderRepository
 import com.example.careconnect.domain.repository.PatientRepository
+import com.example.careconnect.i18n.tr
 import com.example.careconnect.util.currentTimeMillis
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -16,21 +17,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-
-data class NewOrderUiState(
-    val existingOrderId: String? = null,
-    val selectedPatientId: String = "",
-    val description: String = "",
-    val dueDate: Long = currentTimeMillis(),
-    val isSaving: Boolean = false,
-    val errorMessage: String? = null
-) {
-    val isEditing: Boolean
-        get() = existingOrderId != null
-
-    val canSave: Boolean
-        get() = selectedPatientId.isNotEmpty() && description.isNotBlank() && !isSaving
-}
 
 // Neuer Auftrag oder Auftrag bearbeiten (NewOrderSheet in iOS)
 class NewOrderViewModel(
@@ -66,7 +52,7 @@ class NewOrderViewModel(
         val state = _uiState.value
         val patient = patients.value.firstOrNull { it.id == state.selectedPatientId }
         if (patient == null) {
-            _uiState.update { it.copy(errorMessage = "Fehler: Patient nicht gefunden.") }
+            _uiState.update { it.copy(errorMessage = tr("Fehler: Patient nicht gefunden.")) }
             return
         }
 
@@ -99,7 +85,7 @@ class NewOrderViewModel(
             _uiState.update { it.copy(isSaving = false) }
             result
                 .onSuccess { onSuccess() }
-                .onFailure { e -> _uiState.update { it.copy(errorMessage = "Fehler beim Speichern: ${e.message}") } }
+                .onFailure { e -> _uiState.update { it.copy(errorMessage = tr("Fehler beim Speichern: {0}", e.message)) } }
         }
     }
 }
