@@ -26,8 +26,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.careconnect.domain.model.TimeOfDay
+import com.example.careconnect.i18n.tr
+import com.example.careconnect.mock.MockData
+import com.example.careconnect.mock.repository.AuthRepositoryMock
+import com.example.careconnect.mock.repository.MedicineRepositoryMock
 import com.example.careconnect.ui.components.CareTopBar
 import com.example.careconnect.ui.components.SectionCard
+import com.example.careconnect.ui.theme.CareConnectTheme
 import com.example.careconnect.ui.theme.StatusPurple
 import com.example.careconnect.ui.theme.StatusRed
 import org.koin.compose.viewmodel.koinViewModel
@@ -45,12 +50,12 @@ fun MedicineScreen(
             .background(MaterialTheme.colorScheme.background)
     ) {
         CareTopBar(
-            title = "Medikamente",
+            title = tr("Medikamente"),
             actions = {
                 IconButton(onClick = { showAddSheet = true }) {
                     Icon(
                         Icons.Default.AddCircle,
-                        contentDescription = "Medikament hinzufügen",
+                        contentDescription = tr("Medikament hinzufügen"),
                         tint = MaterialTheme.colorScheme.primary
                     )
                 }
@@ -68,7 +73,7 @@ fun MedicineScreen(
                     SectionCard(title = time.displayName) {
                         if (filtered.isEmpty()) {
                             Text(
-                                "Keine Medikamente eingetragen.",
+                                tr("Keine Medikamente eingetragen."),
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                         } else {
@@ -80,7 +85,7 @@ fun MedicineScreen(
                                         modifier = Modifier.weight(1f)
                                     )
                                     IconButton(onClick = { viewModel.deleteMedicine(medicine) }) {
-                                        Icon(Icons.Default.Delete, contentDescription = "Löschen", tint = StatusRed)
+                                        Icon(Icons.Default.Delete, contentDescription = tr("Löschen"), tint = StatusRed)
                                     }
                                 }
                             }
@@ -102,5 +107,9 @@ fun MedicineScreen(
 @Preview
 @Composable
 fun MedicineScreenPreview() {
-    MedicineScreen()
+    CareConnectTheme(darkTheme = false) {
+        MedicineScreen(
+            viewModel = MedicineViewModel(MedicineRepositoryMock(), AuthRepositoryMock(MockData.patient.id))
+        )
+    }
 }
