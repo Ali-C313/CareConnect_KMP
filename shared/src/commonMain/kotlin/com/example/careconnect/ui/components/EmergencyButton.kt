@@ -31,6 +31,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.careconnect.i18n.tr
+import com.example.careconnect.ui.theme.CareConnectTheme
 import com.example.careconnect.ui.theme.StatusOrange
 
 @Composable
@@ -70,7 +72,7 @@ fun EmergencyButton(
                 modifier = Modifier.size(26.dp)
             )
             Text(
-                text = "Notruf",
+                text = tr("Notruf"),
                 color = Color.White,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.SemiBold
@@ -82,5 +84,7 @@ fun EmergencyButton(
 @Preview
 @Composable
 fun EmergencyButtonPreview() {
-    EmergencyButton(onClick = {})
+    CareConnectTheme(darkTheme = false) {
+        EmergencyButton(onClick = {})
+    }
 }
