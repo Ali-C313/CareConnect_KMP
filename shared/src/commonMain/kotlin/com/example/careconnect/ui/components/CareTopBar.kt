@@ -12,6 +12,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
+import com.example.careconnect.i18n.tr
+import com.example.careconnect.ui.theme.CareConnectTheme
 
 /**
  * Einheitliche Titelleiste für alle Screens.
@@ -36,7 +39,7 @@ fun CareTopBar(
                 IconButton(onClick = onBack) {
                     Icon(
                         Icons.AutoMirrored.Filled.ArrowBack,
-                        "Zurück"
+                        tr("Zurück")
                     )
                 }
             }
@@ -46,4 +49,12 @@ fun CareTopBar(
             containerColor = MaterialTheme.colorScheme.background
         )
     )
+}
+
+@Preview
+@Composable
+fun CareTopBarPreview() {
+    CareConnectTheme(darkTheme = false) {
+        CareTopBar(title = "Einstellungen", onBack = {})
+    }
 }
