@@ -17,3 +17,7 @@ captures
 !*.xcworkspace/contents.xcworkspacedata
 **/xcshareddata/WorkspaceSettings.xcsettings
 node_modules/
+
+# Firebase-Schlüssel nie committen
+scripts/migration/node_modules/
+scripts/migration/*serviceAccount*.json
