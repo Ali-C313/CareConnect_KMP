@@ -37,7 +37,7 @@ datastore = "1.2.1"
 filekit = "0.15.0"
 
 # Karte & Standort (nur Android)
-mapsCompose = "8.6.0"
+osmdroid = "6.1.20"
 playServicesLocation = "21.4.0"
 
 [libraries]
@@ -89,7 +89,7 @@ androidx-datastore-preferences = { module = "androidx.datastore:datastore-prefer
 filekit-dialogs-compose = { module = "io.github.vinceglb:filekit-dialogs-compose", version.ref = "filekit" }
 
 # Karte & Standort
-maps-compose = { module = "com.google.maps.android:maps-compose", version.ref = "mapsCompose" }
+osmdroid = { module = "org.osmdroid:osmdroid-android", version.ref = "osmdroid" }
 play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocation" }
 
 [plugins]
