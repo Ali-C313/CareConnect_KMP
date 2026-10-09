@@ -5,25 +5,12 @@ import androidx.lifecycle.viewModelScope
 import com.example.careconnect.domain.repository.AuthRepository
 import com.example.careconnect.domain.repository.EmployeeRepository
 import com.example.careconnect.domain.repository.StorageRepository
+import com.example.careconnect.i18n.tr
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-
-data class EditEmployeeUiState(
-    val firstName: String = "",
-    val lastName: String = "",
-    val role: String = "",
-    val email: String = "",
-    val profileImageUrl: String = "",
-    val currentPassword: String = "",
-    val newPassword: String = "",
-    val confirmPassword: String = "",
-    val isSaving: Boolean = false,
-    val isChangingPassword: Boolean = false,
-    val message: String? = null
-)
 
 class EditEmployeeProfileViewModel(
     private val employeeRepo: EmployeeRepository,
@@ -84,7 +71,7 @@ class EditEmployeeProfileViewModel(
 
             employeeRepo.updateProfile(id, state.firstName.trim(), state.lastName.trim(), state.role.trim(), state.email.trim())
                 .onSuccess { onSuccess() }
-                .onFailure { e -> _uiState.update { it.copy(message = "Fehler beim Speichern: ${e.message}") } }
+                .onFailure { e -> _uiState.update { it.copy(message = tr("Fehler beim Speichern: {0}", e.message)) } }
 
             _uiState.update { it.copy(isSaving = false) }
         }
@@ -93,9 +80,9 @@ class EditEmployeeProfileViewModel(
     fun changePassword() {
         val state = _uiState.value
         val error = when {
-            state.currentPassword.isEmpty() -> "Bitte aktuelles Passwort eingeben."
-            state.newPassword.isEmpty() -> "Bitte neues Passwort eingeben."
-            state.newPassword != state.confirmPassword -> "Die neuen Passwörter stimmen nicht überein."
+            state.currentPassword.isEmpty() -> tr("Bitte aktuelles Passwort eingeben.")
+            state.newPassword.isEmpty() -> tr("Bitte neues Passwort eingeben.")
+            state.newPassword != state.confirmPassword -> tr("Die neuen Passwörter stimmen nicht überein.")
             else -> null
         }
         if (error != null) {
@@ -109,14 +96,14 @@ class EditEmployeeProfileViewModel(
                 .onSuccess {
                     _uiState.update {
                         it.copy(
-                            message = "Passwort erfolgreich geändert.",
+                            message = tr("Passwort erfolgreich geändert."),
                             currentPassword = "",
                             newPassword = "",
                             confirmPassword = ""
                         )
                     }
                 }
-                .onFailure { e -> _uiState.update { it.copy(message = "Fehler: ${e.message}") } }
+                .onFailure { e -> _uiState.update { it.copy(message = tr("Fehler: {0}", e.message)) } }
             _uiState.update { it.copy(isChangingPassword = false) }
         }
     }
