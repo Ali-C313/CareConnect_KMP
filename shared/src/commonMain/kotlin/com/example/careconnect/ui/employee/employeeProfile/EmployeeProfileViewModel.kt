@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.careconnect.domain.model.Employee
 import com.example.careconnect.domain.model.EmployeeDocument
 import com.example.careconnect.domain.repository.EmployeeRepository
+import com.example.careconnect.i18n.tr
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -52,14 +53,14 @@ class EmployeeProfileViewModel(
         val name = if (fileName.endsWith(".pdf", ignoreCase = true)) fileName else "$fileName.pdf"
 
         if (documents.value.any { it.fileName == name }) {
-            _errorMessage.update { "Diese Datei wurde bereits hochgeladen." }
+            _errorMessage.update { tr("Diese Datei wurde bereits hochgeladen.") }
             return
         }
 
         viewModelScope.launch {
             _isUploading.update { true }
             employeeRepo.addDocument(id, name, bytes)
-                .onFailure { e -> _errorMessage.update { "Upload fehlgeschlagen: ${e.message}" } }
+                .onFailure { e -> _errorMessage.update { tr("Upload fehlgeschlagen: {0}", e.message) } }
             _isUploading.update { false }
         }
     }
@@ -68,7 +69,7 @@ class EmployeeProfileViewModel(
         val id = employeeId.value ?: return
         viewModelScope.launch {
             employeeRepo.deleteDocument(id, document.id)
-                .onFailure { e -> _errorMessage.update { "Löschen fehlgeschlagen: ${e.message}" } }
+                .onFailure { e -> _errorMessage.update { tr("Löschen fehlgeschlagen: {0}", e.message) } }
         }
     }
 
