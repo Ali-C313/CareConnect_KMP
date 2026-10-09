@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -18,8 +20,11 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.careconnect.ui.theme.CareConnectTheme
+import com.example.careconnect.ui.theme.StatusOrange
 
 /**
  * Statistik-Kachel auf dem Home-Screen (Offen / Aktuell / Erledigt).
@@ -58,5 +63,13 @@ fun StatTile(
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
+    }
+}
+
+@Preview
+@Composable
+fun StatTilePreview() {
+    CareConnectTheme(darkTheme = false) {
+        StatTile(value = 3, label = "Offen", icon = Icons.Default.Star, color = StatusOrange)
     }
 }
