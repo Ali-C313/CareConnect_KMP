@@ -12,7 +12,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.careconnect.i18n.tr
+import com.example.careconnect.ui.theme.CareConnectTheme
 
 @Composable
 fun ChangePasswordCard(
@@ -25,10 +28,10 @@ fun ChangePasswordCard(
     isLoading: Boolean,
     onChangePassword: () -> Unit
 ) {
-    SectionCard(title = "Passwort ändern", icon = Icons.Default.Lock) {
-        CareTextField("Aktuelles Passwort", currentPassword, onCurrentPasswordChange, isPassword = true)
-        CareTextField("Neues Passwort", newPassword, onNewPasswordChange, isPassword = true)
-        CareTextField("Neues Passwort bestätigen", confirmPassword, onConfirmPasswordChange, isPassword = true)
+    SectionCard(title = tr("Passwort ändern"), icon = Icons.Default.Lock) {
+        CareTextField(tr("Aktuelles Passwort"), currentPassword, onCurrentPasswordChange, isPassword = true)
+        CareTextField(tr("Neues Passwort"), newPassword, onNewPasswordChange, isPassword = true)
+        CareTextField(tr("Neues Passwort bestätigen"), confirmPassword, onConfirmPasswordChange, isPassword = true)
 
         Button(
             onClick = onChangePassword,
@@ -39,8 +42,25 @@ fun ChangePasswordCard(
                 CircularProgressIndicator(color = Color.White, modifier = Modifier.size(20.dp))
             } else {
                 Icon(Icons.Default.Key, contentDescription = null)
-                Text("  Passwort ändern")
+                Text(tr("  Passwort ändern"))
             }
         }
+    }
+}
+
+@Preview
+@Composable
+fun ChangePasswordCardPreview() {
+    CareConnectTheme(darkTheme = false) {
+        ChangePasswordCard(
+            currentPassword = "",
+            newPassword = "",
+            confirmPassword = "",
+            onCurrentPasswordChange = {},
+            onNewPasswordChange = {},
+            onConfirmPasswordChange = {},
+            isLoading = false,
+            onChangePassword = {}
+        )
     }
 }
