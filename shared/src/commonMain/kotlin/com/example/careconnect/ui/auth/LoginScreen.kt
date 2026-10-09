@@ -15,8 +15,8 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.LocalHospital
+import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
@@ -33,11 +33,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.careconnect.i18n.tr
+import com.example.careconnect.mock.repository.AuthRepositoryMock
+import com.example.careconnect.ui.components.CareTextField
 import com.example.careconnect.ui.components.SectionCard
+import com.example.careconnect.ui.theme.CareConnectTheme
 import org.koin.compose.viewmodel.koinViewModel
 
 /**
@@ -73,9 +76,10 @@ fun LoginScreen(
             color = MaterialTheme.colorScheme.primary
         )
         Text(
-            text = "Willkommen zurück",
+            text = tr("Willkommen"),
             style = MaterialTheme.typography.headlineLarge,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.onBackground
         )
 
         Spacer(Modifier.height(8.dp))
@@ -83,9 +87,9 @@ fun LoginScreen(
         if (isLoggedInWithoutProfile) {
             // Eingeloggt, aber weder Mitarbeiter- noch Patientenprofil vorhanden
             SectionCard {
-                Text("Du bist angemeldet, aber es wurde noch kein Profil gefunden. Das Profil wird gerade geladen oder fehlt.")
+                Text(tr("Du bist angemeldet, aber es wurde noch kein Profil gefunden. Das Profil wird gerade geladen oder fehlt."))
                 OutlinedButton(onClick = onLogout, modifier = Modifier.fillMaxWidth()) {
-                    Text("Abmelden")
+                    Text(tr("Abmelden"))
                 }
             }
         }
@@ -93,7 +97,7 @@ fun LoginScreen(
         OutlinedTextField(
             value = uiState.email,
             onValueChange = viewModel::onEmailChange,
-            label = { Text("E-Mail-Adresse") },
+            label = { Text(tr("E-Mail-Adresse")) },
             leadingIcon = { Icon(Icons.Default.Email, contentDescription = null) },
             singleLine = true,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
@@ -101,16 +105,12 @@ fun LoginScreen(
             modifier = Modifier.fillMaxWidth()
         )
 
-        OutlinedTextField(
+        CareTextField(
+            label = tr("Passwort"),
             value = uiState.password,
             onValueChange = viewModel::onPasswordChange,
-            label = { Text("Passwort") },
-            leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null) },
-            singleLine = true,
-            visualTransformation = PasswordVisualTransformation(),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-            shape = RoundedCornerShape(12.dp),
-            modifier = Modifier.fillMaxWidth()
+            icon = Icons.Default.Lock,
+            isPassword = true
         )
 
         uiState.errorMessage?.let { error ->
@@ -135,12 +135,12 @@ fun LoginScreen(
                     modifier = Modifier.size(24.dp)
                 )
             } else {
-                Text("Einloggen", fontWeight = FontWeight.SemiBold)
+                Text(tr("Einloggen"), fontWeight = FontWeight.SemiBold)
             }
         }
 
         TextButton(onClick = onRegisterClick) {
-            Text("Noch kein Konto? Jetzt registrieren")
+            Text(tr("Noch kein Konto? Jetzt registrieren"))
         }
     }
 }
@@ -148,9 +148,12 @@ fun LoginScreen(
 @Preview
 @Composable
 fun LoginScreenPreview() {
-    LoginScreen(
-        onRegisterClick = {},
-        isLoggedInWithoutProfile = false,
-        onLogout = {}
-    )
+    CareConnectTheme(darkTheme = false) {
+        LoginScreen(
+            onRegisterClick = {},
+            isLoggedInWithoutProfile = false,
+            onLogout = {},
+            viewModel = LoginViewModel(AuthRepositoryMock())
+        )
+    }
 }
