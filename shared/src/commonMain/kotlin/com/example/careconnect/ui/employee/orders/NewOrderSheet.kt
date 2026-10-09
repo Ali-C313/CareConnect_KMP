@@ -37,9 +37,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.careconnect.domain.model.Order
+import com.example.careconnect.i18n.tr
+import com.example.careconnect.mock.repository.AuthRepositoryMock
+import com.example.careconnect.mock.repository.OrderRepositoryMock
+import com.example.careconnect.mock.repository.PatientRepositoryMock
 import com.example.careconnect.ui.components.DateTimePickerField
+import com.example.careconnect.ui.theme.CareConnectTheme
 import org.koin.compose.viewmodel.koinViewModel
 
 /**
@@ -73,13 +79,13 @@ fun NewOrderSheet(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Text(
-                text = if (uiState.isEditing) "Auftrag bearbeiten" else "Neuer Auftrag",
+                text = if (uiState.isEditing) tr("Auftrag bearbeiten") else tr("Neuer Auftrag"),
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold
             )
 
             // Patient auswählen
-            Text("Patient auswählen", style = MaterialTheme.typography.labelLarge)
+            Text(tr("Patient auswählen"), style = MaterialTheme.typography.labelLarge)
             Box {
                 val selectedName = patients.firstOrNull { it.id == uiState.selectedPatientId }?.name
                 Surface(
@@ -95,7 +101,7 @@ fun NewOrderSheet(
                     ) {
                         Icon(Icons.Default.Person, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
                         Text(
-                            text = selectedName ?: "Patient wählen",
+                            text = selectedName ?: tr("Patient wählen"),
                             modifier = Modifier.weight(1f)
                         )
                         Icon(Icons.Default.ArrowDropDown, contentDescription = null)
@@ -120,7 +126,7 @@ fun NewOrderSheet(
             OutlinedTextField(
                 value = uiState.description,
                 onValueChange = viewModel::onDescriptionChange,
-                label = { Text("Beschreibung des Auftrags") },
+                label = { Text(tr("Beschreibung des Auftrags")) },
                 minLines = 3,
                 maxLines = 6,
                 shape = RoundedCornerShape(12.dp),
@@ -128,7 +134,7 @@ fun NewOrderSheet(
             )
 
             DateTimePickerField(
-                label = "Ausführungszeit",
+                label = tr("Ausführungszeit"),
                 millis = uiState.dueDate,
                 onValueChange = viewModel::onDueDateChange
             )
@@ -137,7 +143,7 @@ fun NewOrderSheet(
 
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 OutlinedButton(onClick = onDismiss, modifier = Modifier.weight(1f)) {
-                    Text("Abbrechen")
+                    Text(tr("Abbrechen"))
                 }
                 Button(
                     onClick = { viewModel.save(onSuccess = onDismiss) },
@@ -147,10 +153,22 @@ fun NewOrderSheet(
                     if (uiState.isSaving) {
                         CircularProgressIndicator(color = Color.White, modifier = Modifier.size(20.dp))
                     } else {
-                        Text("Speichern")
+                        Text(tr("Speichern"))
                     }
                 }
             }
         }
+    }
+}
+
+@Preview
+@Composable
+fun NewOrderSheetPreview() {
+    CareConnectTheme(darkTheme = false) {
+        NewOrderSheet(
+            existingOrder = null,
+            onDismiss = {},
+            viewModel = NewOrderViewModel(OrderRepositoryMock(), AuthRepositoryMock(), PatientRepositoryMock())
+        )
     }
 }
