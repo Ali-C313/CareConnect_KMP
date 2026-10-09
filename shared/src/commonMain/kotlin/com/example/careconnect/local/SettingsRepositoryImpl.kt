@@ -20,4 +20,44 @@ class SettingsRepositoryImpl(
             preferences[PreferencesKeys.DARK_MODE] = enabled
         }
     }
+
+    override val shareLocation: Flow<Boolean?> = dataStore.data.map { preferences ->
+        preferences[PreferencesKeys.SHARE_LOCATION]
+    }
+
+    override suspend fun setShareLocation(enabled: Boolean) {
+        dataStore.edit { preferences ->
+            preferences[PreferencesKeys.SHARE_LOCATION] = enabled
+        }
+    }
+
+    override val showLiveLocation: Flow<Boolean?> = dataStore.data.map { preferences ->
+        preferences[PreferencesKeys.SHOW_LIVE_LOCATION]
+    }
+
+    override suspend fun setShowLiveLocation(enabled: Boolean) {
+        dataStore.edit { preferences ->
+            preferences[PreferencesKeys.SHOW_LIVE_LOCATION] = enabled
+        }
+    }
+
+    override val notificationsEnabled: Flow<Boolean> = dataStore.data.map { preferences ->
+        preferences[PreferencesKeys.NOTIFICATIONS] ?: true
+    }
+
+    override suspend fun setNotificationsEnabled(enabled: Boolean) {
+        dataStore.edit { preferences ->
+            preferences[PreferencesKeys.NOTIFICATIONS] = enabled
+        }
+    }
+
+    override val language: Flow<String?> = dataStore.data.map { preferences ->
+        preferences[PreferencesKeys.LANGUAGE]
+    }
+
+    override suspend fun setLanguage(code: String) {
+        dataStore.edit { preferences ->
+            preferences[PreferencesKeys.LANGUAGE] = code
+        }
+    }
 }
