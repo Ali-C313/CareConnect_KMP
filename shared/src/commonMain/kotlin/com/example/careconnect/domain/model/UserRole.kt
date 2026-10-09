@@ -1,6 +1,11 @@
 package com.example.careconnect.domain.model
 
-enum class UserRole(val displayName: String) {
+import com.example.careconnect.i18n.tr
+
+enum class UserRole(private val label: String) {
     EMPLOYEE("Mitarbeiter"),
-    PATIENT("Patient")
+    PATIENT("Patient");
+
+    val displayName: String
+        get() = tr(label)
 }
