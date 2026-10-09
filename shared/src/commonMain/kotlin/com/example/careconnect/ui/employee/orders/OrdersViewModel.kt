@@ -7,7 +7,7 @@ import com.example.careconnect.domain.model.Order
 import com.example.careconnect.domain.model.OrderState
 import com.example.careconnect.domain.repository.EmployeeRepository
 import com.example.careconnect.domain.repository.OrderRepository
-import com.example.careconnect.location.TrackingManager
+import com.example.careconnect.service.TrackingManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
