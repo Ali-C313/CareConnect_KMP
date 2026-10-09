@@ -17,9 +17,9 @@ data class OrderDto(
     val assignedTo: String? = null,
     val employeeId: String? = null,
     val dueDate: Timestamp? = null,
-    val createdAt: Timestamp? = null
+    val createdAt: Timestamp? = null,
+    val report: CompletionReportDto? = null
 )
-
 fun OrderDto.toOrder(docId: String): Order = Order(
     id = docId,
     state = OrderState.fromValue(state),
@@ -30,9 +30,9 @@ fun OrderDto.toOrder(docId: String): Order = Order(
     createdBy = createdBy ?: "",
     employeeId = employeeId?.ifEmpty { null } ?: assignedTo ?: "",
     dueDate = dueDate?.toMillis(),
-    createdAt = createdAt?.toMillis()
+    createdAt = createdAt?.toMillis(),
+    report = report?.toReport()
 )
-
 fun Order.toDto(): OrderDto = OrderDto(
     id = id,
     state = state.value,
@@ -44,5 +44,6 @@ fun Order.toDto(): OrderDto = OrderDto(
     assignedTo = "",
     employeeId = employeeId,
     dueDate = dueDate?.toTimestamp(),
-    createdAt = createdAt?.toTimestamp()
+    createdAt = createdAt?.toTimestamp(),
+    report = report?.toDto()
 )
