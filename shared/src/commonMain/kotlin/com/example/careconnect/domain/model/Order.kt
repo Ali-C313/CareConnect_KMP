@@ -1,15 +1,6 @@
 package com.example.careconnect.domain.model
 
-enum class OrderState(val value: String, val displayName: String) {
-    OFFEN("offen", "Offen"),
-    AKTUELL("aktuell", "Aktuell"),
-    ERLEDIGT("erledigt", "Erledigt");
-
-    companion object {
-        fun fromValue(value: String?): OrderState =
-            entries.firstOrNull { it.value == value?.lowercase() } ?: OFFEN
-    }
-}
+import com.example.careconnect.i18n.tr
 
 data class Order(
     val id: String,
@@ -21,8 +12,9 @@ data class Order(
     val createdBy: String = "",
     val employeeId: String = "",
     val dueDate: Long? = null,
-    val createdAt: Long? = null
+    val createdAt: Long? = null,
+    val report: CompletionReport? = null
 ) {
     val displayTitle: String
-        get() = "Auftrag #${id.take(6)}"
+        get() = tr("Auftrag #{0}", id.take(6))
 }
