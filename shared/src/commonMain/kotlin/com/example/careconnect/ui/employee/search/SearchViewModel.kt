@@ -2,9 +2,6 @@ package com.example.careconnect.ui.employee.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.careconnect.domain.model.Employee
-import com.example.careconnect.domain.model.Order
-import com.example.careconnect.domain.model.Patient
 import com.example.careconnect.domain.repository.EmployeeRepository
 import com.example.careconnect.domain.repository.OrderRepository
 import com.example.careconnect.domain.repository.PatientRepository
@@ -14,12 +11,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-
-data class SearchResults(
-    val employees: List<Employee> = emptyList(),
-    val patients: List<Patient> = emptyList(),
-    val orders: List<Order> = emptyList()
-)
 
 class SearchViewModel(
     employeeRepo: EmployeeRepository,
