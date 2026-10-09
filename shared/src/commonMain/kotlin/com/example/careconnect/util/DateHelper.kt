@@ -2,11 +2,14 @@
 
 package com.example.careconnect.util
 
+import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.LocalTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.atStartOfDayIn
+import kotlinx.datetime.isoDayNumber
 import kotlinx.datetime.number
+import kotlinx.datetime.plus
 import kotlinx.datetime.toInstant
 import kotlinx.datetime.toLocalDateTime
 import kotlin.time.Clock
@@ -68,3 +71,20 @@ fun combineDateAndTime(pickerDateMillis: Long, hour: Int, minute: Int): Long {
         .toInstant(TimeZone.currentSystemDefault())
         .toEpochMilliseconds()
 }
+
+/**
+ * Termine für wiederkehrende Aufträge.
+ * @param weekdays 1 = Montag bis 7 = Sonntag
+ * @return Zeitpunkte ab start (gleiche Uhrzeit) für die gewählten Wochentage
+ */
+fun recurringDates(startMillis: Long, weekdays: Set<Int>, weeks: Int): List<Long> {
+    val timeZone = TimeZone.currentSystemDefault()
+    val start = Instant.fromEpochMilliseconds(startMillis).toLocalDateTime(timeZone)
+    return (0 until weeks * 7)
+        .map { offset -> start.date.plus(offset, DateTimeUnit.DAY) }
+        .filter { it.dayOfWeek.isoDayNumber in weekdays }
+        .map { date -> LocalDateTime(date, start.time).toInstant(timeZone).toEpochMilliseconds() }
+}
+
+fun Long.isToday(): Boolean =
+    toLocalDateTime().date == currentTimeMillis().toLocalDateTime().date
