@@ -7,7 +7,6 @@ import com.example.careconnect.domain.model.Appointment
 import com.example.careconnect.domain.repository.AppointmentRepository
 import com.example.careconnect.domain.repository.AuthRepository
 import com.example.careconnect.domain.repository.GeoRepository
-import com.example.careconnect.util.currentTimeMillis
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,19 +17,6 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-
-data class AppointmentFormState(
-    val editingId: String? = null,
-    val what: String = "",
-    val address: String = "",
-    val date: Long = currentTimeMillis(),
-    val bringItems: List<String> = emptyList(),
-    val notes: String = "",
-    val addressSuggestions: List<AddressSuggestion> = emptyList()
-) {
-    val canSave: Boolean
-        get() = what.isNotBlank() && address.isNotBlank()
-}
 
 class AppointmentsViewModel(
     private val appointmentRepo: AppointmentRepository,
