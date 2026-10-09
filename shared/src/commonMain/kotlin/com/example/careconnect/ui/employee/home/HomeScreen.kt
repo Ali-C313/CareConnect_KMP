@@ -1,79 +1,67 @@
 package com.example.careconnect.ui.employee.home
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.PlayCircle
 import androidx.compose.material.icons.filled.Schedule
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.UnfoldMore
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.careconnect.domain.model.Employee
 import com.example.careconnect.domain.model.OrderState
 import com.example.careconnect.domain.model.StaffStatus
-import com.example.careconnect.ui.components.AvatarView
+import com.example.careconnect.i18n.tr
+import com.example.careconnect.mock.repository.AuthRepositoryMock
+import com.example.careconnect.mock.repository.EmployeeRepositoryMock
+import com.example.careconnect.mock.repository.OrderRepositoryMock
+import com.example.careconnect.mock.repository.PatientRepositoryMock
+import com.example.careconnect.platform.tourUrl
 import com.example.careconnect.ui.components.CareTopBar
-import com.example.careconnect.ui.components.SectionCard
 import com.example.careconnect.ui.components.StatTile
+import com.example.careconnect.ui.theme.CareConnectTheme
 import com.example.careconnect.ui.theme.StatusBlue
 import com.example.careconnect.ui.theme.StatusGreen
 import com.example.careconnect.ui.theme.StatusOrange
 import com.example.careconnect.ui.theme.color
-import com.example.careconnect.util.StringHelper
+import com.example.careconnect.util.openSafely
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun HomeScreen(
     onSearchClick: () -> Unit,
     onEmployeeClick: (String) -> Unit,
+    onOrderClick: (String) -> Unit,
     viewModel: HomeViewModel = koinViewModel()
 ) {
     val employees by viewModel.employees.collectAsState()
     val orders by viewModel.orders.collectAsState()
     val currentEmployee by viewModel.currentEmployee.collectAsState()
+    val todayTour by viewModel.todayTour.collectAsState()
+    val uriHandler = LocalUriHandler.current
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
     ) {
-        CareTopBar(title = "Home")
+        CareTopBar(title = tr("Home"))
 
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
@@ -90,7 +78,7 @@ fun HomeScreen(
 
             item {
                 Text(
-                    text = "Tippe auf den Status, um ihn zu ändern",
+                    text = tr("Tippe auf den Status, um ihn zu ändern"),
                     style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.fillMaxWidth(),
@@ -102,21 +90,21 @@ fun HomeScreen(
                 Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                     StatTile(
                         value = orders.count { it.state == OrderState.OFFEN },
-                        label = "Offen",
+                        label = tr("Offen"),
                         icon = Icons.Default.Schedule,
                         color = StatusOrange,
                         modifier = Modifier.weight(1f)
                     )
                     StatTile(
                         value = orders.count { it.state == OrderState.AKTUELL },
-                        label = "Aktuell",
+                        label = tr("Aktuell"),
                         icon = Icons.Default.PlayCircle,
                         color = StatusBlue,
                         modifier = Modifier.weight(1f)
                     )
                     StatTile(
                         value = orders.count { it.state == OrderState.ERLEDIGT },
-                        label = "Erledigt",
+                        label = tr("Erledigt"),
                         icon = Icons.Default.CheckCircle,
                         color = StatusGreen,
                         modifier = Modifier.weight(1f)
@@ -125,8 +113,18 @@ fun HomeScreen(
             }
 
             item {
+                TodayTourCard(
+                    stops = todayTour,
+                    onStopClick = onOrderClick,
+                    onRouteClick = {
+                        tourUrl(todayTour.map { it.address }.filter { it.isNotBlank() })
+                            ?.let { uriHandler.openSafely(it) }
+                    }
+                )
+            }
+            item {
                 Text(
-                    text = "👥 Mitarbeiter",
+                    text = tr("👥 Mitarbeiter"),
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(top = 8.dp)
@@ -143,136 +141,20 @@ fun HomeScreen(
     }
 }
 
-@Composable
-private fun HeaderSection(
-    status: StaffStatus,
-    onStatusChange: (StaffStatus) -> Unit,
-    onSearchClick: () -> Unit
-) {
-    var menuExpanded by remember { mutableStateOf(false) }
-
-    SectionCard {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(44.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            // Status-Auswahl
-            Box(Modifier.weight(1f)) {
-                Row(
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(10.dp))
-                        .clickable { menuExpanded = true }
-                        .padding(horizontal = 8.dp, vertical = 8.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    Box(
-                        Modifier
-                            .size(12.dp)
-                            .clip(CircleShape)
-                            .background(status.color)
-                    )
-                    Text(status.displayName, fontWeight = FontWeight.SemiBold)
-                    Icon(
-                        Icons.Default.UnfoldMore,
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                        modifier = Modifier.size(18.dp)
-                    )
-                }
-                DropdownMenu(
-                    expanded = menuExpanded,
-                    onDismissRequest = { menuExpanded = false }
-                ) {
-                    StaffStatus.entries.forEach { option ->
-                        DropdownMenuItem(
-                            text = { Text(option.displayName) },
-                            leadingIcon = {
-                                Box(
-                                    Modifier
-                                        .size(12.dp)
-                                        .clip(CircleShape)
-                                        .background(option.color)
-                                )
-                            },
-                            onClick = {
-                                menuExpanded = false
-                                onStatusChange(option)
-                            }
-                        )
-                    }
-                }
-            }
-
-            VerticalDivider(Modifier.padding(vertical = 6.dp))
-
-            // Suche öffnet eigenen Screen (wie das Sheet in iOS)
-            Row(
-                modifier = Modifier
-                    .weight(1f)
-                    .clip(RoundedCornerShape(10.dp))
-                    .clickable(onClick = onSearchClick)
-                    .padding(horizontal = 10.dp, vertical = 8.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Icon(
-                    Icons.Default.Search,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-                Spacer(Modifier.width(6.dp))
-                Text(
-                    text = "Suche…",
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-            }
-        }
-    }
-}
-
-@Composable
-private fun EmployeeRow(
-    employee: Employee,
-    onClick: () -> Unit
-) {
-    SectionCard(modifier = Modifier.clickable(onClick = onClick)) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            AvatarView(
-                initials = StringHelper.initials(employee.name),
-                imageUrl = employee.profileImageUrl,
-                borderColor = employee.status.color
-            )
-            Column {
-                Text(
-                    text = employee.name,
-                    style = MaterialTheme.typography.titleMedium,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-                Text(
-                    text = employee.role,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-                Text(
-                    text = employee.status.displayName,
-                    style = MaterialTheme.typography.labelSmall,
-                    color = employee.status.color
-                )
-            }
-        }
-    }
-}
-
 @Preview
 @Composable
 fun HomeScreenPreview() {
-    HomeScreen(onSearchClick = {}, onEmployeeClick = {})
+    CareConnectTheme(darkTheme = false) {
+        HomeScreen(
+            onSearchClick = {},
+            onEmployeeClick = {},
+            onOrderClick = {},
+            viewModel = HomeViewModel(
+                EmployeeRepositoryMock(),
+                OrderRepositoryMock(),
+                AuthRepositoryMock(),
+                PatientRepositoryMock()
+            )
+        )
+    }
 }
