@@ -24,8 +24,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
+import com.example.careconnect.i18n.tr
+import com.example.careconnect.ui.theme.CareConnectTheme
 import io.github.vinceglb.filekit.dialogs.FileKitType
 import io.github.vinceglb.filekit.dialogs.compose.rememberFilePickerLauncher
 import io.github.vinceglb.filekit.readBytes
@@ -68,14 +71,14 @@ fun ProfileImagePicker(
             when {
                 imageBytes != null -> AsyncImage(
                     model = imageBytes,
-                    contentDescription = "Profilbild",
+                    contentDescription = tr("Profilbild"),
                     contentScale = ContentScale.Crop,
                     modifier = Modifier.fillMaxSize()
                 )
 
                 imageUrl.isNotEmpty() -> AsyncImage(
                     model = imageUrl,
-                    contentDescription = "Profilbild",
+                    contentDescription = tr("Profilbild"),
                     contentScale = ContentScale.Crop,
                     modifier = Modifier.fillMaxSize()
                 )
@@ -92,7 +95,15 @@ fun ProfileImagePicker(
         TextButton(onClick = { launcher.launch() }) {
             Icon(Icons.Default.Photo, contentDescription = null)
             Spacer(Modifier.width(6.dp))
-            Text("Bild auswählen")
+            Text(tr("Bild auswählen"))
         }
+    }
+}
+
+@Preview
+@Composable
+fun ProfileImagePickerPreview() {
+    CareConnectTheme(darkTheme = false) {
+        ProfileImagePicker(imageBytes = null, imageUrl = "", onImagePicked = {})
     }
 }
