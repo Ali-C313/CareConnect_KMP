@@ -33,9 +33,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.careconnect.domain.model.OrderState
+import com.example.careconnect.i18n.tr
+import com.example.careconnect.mock.platform.LocationTrackerMock
+import com.example.careconnect.mock.repository.EmployeeRepositoryMock
+import com.example.careconnect.mock.repository.LocationRepositoryMock
+import com.example.careconnect.mock.repository.OrderRepositoryMock
+import com.example.careconnect.service.TrackingManager
 import com.example.careconnect.ui.components.CareTopBar
 import com.example.careconnect.ui.components.EmptyStateView
 import com.example.careconnect.ui.components.FilterTabs
+import com.example.careconnect.ui.theme.CareConnectTheme
 import com.example.careconnect.ui.theme.Info
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -56,10 +63,10 @@ fun OrdersScreen(
             .background(MaterialTheme.colorScheme.background)
     ) {
         CareTopBar(
-            title = "Aufträge",
+            title = tr("Aufträge"),
             actions = {
                 FilledIconButton(onClick = { showNewOrderSheet = true }) {
-                    Icon(Icons.Default.Add, contentDescription = "Neuen Auftrag erstellen")
+                    Icon(Icons.Default.Add, contentDescription = tr("Neuen Auftrag erstellen"))
                 }
             }
         )
@@ -75,8 +82,8 @@ fun OrdersScreen(
         if (orders.isEmpty()) {
             EmptyStateView(
                 icon = Icons.Default.SearchOff,
-                title = "Keine Aufträge",
-                message = "Erstelle einen neuen Auftrag mit dem + Button oben rechts.",
+                title = tr("Keine Aufträge"),
+                message = tr("Erstelle einen neuen Auftrag mit dem + Button oben rechts."),
                 modifier = Modifier.weight(1f)
             )
         } else {
@@ -87,7 +94,7 @@ fun OrdersScreen(
             ) {
                 items(orders, key = { it.id }) { order ->
                     val employeeName = employees.firstOrNull { it.id == order.employeeId }?.name
-                        ?: if (order.employeeId.isEmpty()) "Noch offen" else order.employeeId
+                        ?: if (order.employeeId.isEmpty()) tr("Noch offen") else order.employeeId
                     OrderCard(
                         order = order,
                         employeeName = employeeName,
@@ -115,7 +122,7 @@ fun OrdersScreen(
                 ) {
                     Icon(Icons.Default.MyLocation, contentDescription = null, tint = Info)
                     Text(
-                        "Live-Tracking aktiv",
+                        tr("Live-Tracking aktiv"),
                         color = Info,
                         fontWeight = FontWeight.Bold,
                         style = MaterialTheme.typography.labelMedium
@@ -136,5 +143,14 @@ fun OrdersScreen(
 @Preview
 @Composable
 fun OrdersScreenPreview() {
-    OrdersScreen(onOrderClick = {})
+    CareConnectTheme(darkTheme = false) {
+        OrdersScreen(
+            onOrderClick = {},
+            viewModel = OrdersViewModel(
+                OrderRepositoryMock(),
+                EmployeeRepositoryMock(),
+                TrackingManager(LocationTrackerMock(), LocationRepositoryMock())
+            )
+        )
+    }
 }
