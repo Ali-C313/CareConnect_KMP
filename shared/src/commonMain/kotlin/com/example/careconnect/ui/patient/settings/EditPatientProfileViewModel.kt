@@ -8,6 +8,7 @@ import com.example.careconnect.domain.repository.AuthRepository
 import com.example.careconnect.domain.repository.GeoRepository
 import com.example.careconnect.domain.repository.PatientRepository
 import com.example.careconnect.domain.repository.StorageRepository
+import com.example.careconnect.i18n.tr
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,17 +16,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-
-data class EditPatientUiState(
-    val patient: Patient? = null,
-    val addressSuggestions: List<AddressSuggestion> = emptyList(),
-    val currentPassword: String = "",
-    val newPassword: String = "",
-    val confirmPassword: String = "",
-    val isSaving: Boolean = false,
-    val isChangingPassword: Boolean = false,
-    val message: String? = null
-)
 
 class EditPatientProfileViewModel(
     private val patientRepo: PatientRepository,
@@ -107,7 +97,7 @@ class EditPatientProfileViewModel(
 
             patientRepo.updateProfile(patient.copy(id = id))
                 .onSuccess { onSuccess() }
-                .onFailure { e -> _uiState.update { it.copy(message = "Fehler beim Speichern: ${e.message}") } }
+                .onFailure { e -> _uiState.update { it.copy(message = tr("Fehler beim Speichern: {0}", e.message)) } }
 
             _uiState.update { it.copy(isSaving = false) }
         }
@@ -116,9 +106,9 @@ class EditPatientProfileViewModel(
     fun changePassword() {
         val state = _uiState.value
         val error = when {
-            state.currentPassword.isEmpty() -> "Bitte aktuelles Passwort eingeben."
-            state.newPassword.length < 6 -> "Das neue Passwort muss mindestens 6 Zeichen haben."
-            state.newPassword != state.confirmPassword -> "Die neuen Passwörter stimmen nicht überein."
+            state.currentPassword.isEmpty() -> tr("Bitte aktuelles Passwort eingeben.")
+            state.newPassword.length < 6 -> tr("Das neue Passwort muss mindestens 6 Zeichen haben.")
+            state.newPassword != state.confirmPassword -> tr("Die neuen Passwörter stimmen nicht überein.")
             else -> null
         }
         if (error != null) {
@@ -132,14 +122,14 @@ class EditPatientProfileViewModel(
                 .onSuccess {
                     _uiState.update {
                         it.copy(
-                            message = "Passwort erfolgreich geändert.",
+                            message = tr("Passwort erfolgreich geändert."),
                             currentPassword = "",
                             newPassword = "",
                             confirmPassword = ""
                         )
                     }
                 }
-                .onFailure { e -> _uiState.update { it.copy(message = "Fehler beim Ändern des Passworts: ${e.message}") } }
+                .onFailure { e -> _uiState.update { it.copy(message = tr("Fehler beim Ändern des Passworts: {0}", e.message)) } }
             _uiState.update { it.copy(isChangingPassword = false) }
         }
     }
