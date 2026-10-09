@@ -3,20 +3,11 @@ package com.example.careconnect.ui.auth
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.careconnect.domain.repository.AuthRepository
+import com.example.careconnect.i18n.tr
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-
-data class LoginUiState(
-    val email: String = "",
-    val password: String = "",
-    val isLoading: Boolean = false,
-    val errorMessage: String? = null
-) {
-    val isFormValid: Boolean
-        get() = email.isNotBlank() && password.isNotBlank()
-}
 
 class LoginViewModel(
     private val authRepo: AuthRepository
@@ -37,14 +28,14 @@ class LoginViewModel(
     fun login() {
         val state = _uiState.value
         if (!state.isFormValid) {
-            _uiState.update { it.copy(errorMessage = "Bitte E-Mail und Passwort eingeben.") }
+            _uiState.update { it.copy(errorMessage = tr("Bitte E-Mail und Passwort eingeben.")) }
             return
         }
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
             authRepo.login(state.email, state.password)
                 .onFailure { error ->
-                    _uiState.update { it.copy(errorMessage = "Fehler beim Login: ${error.message}") }
+                    _uiState.update { it.copy(errorMessage = tr("Fehler beim Login: {0}", error.message)) }
                 }
             _uiState.update { it.copy(isLoading = false) }
         }
