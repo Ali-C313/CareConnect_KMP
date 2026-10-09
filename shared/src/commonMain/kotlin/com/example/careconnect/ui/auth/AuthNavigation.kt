@@ -4,16 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import kotlinx.serialization.Serializable
-
-@Serializable
-sealed interface AuthRoute {
-    @Serializable
-    object Login : AuthRoute
-
-    @Serializable
-    object Register : AuthRoute
-}
 
 @Composable
 fun AuthNavigation(
