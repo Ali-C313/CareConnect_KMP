@@ -24,4 +24,6 @@ actual val platformModule: Module = module {
         }
     }
     single<LocationTracker> { IosLocationTracker() }
+    single<PlatformGeocoder> { IosGeocoder() }
+    single<Notifier> { IosNotifier() }
 }
