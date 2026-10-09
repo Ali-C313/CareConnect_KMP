@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -18,7 +20,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.careconnect.ui.theme.CareConnectTheme
 
 /**
  * Karte mit optionalem Titel und Icon, wird überall als Container benutzt.
@@ -58,5 +62,13 @@ fun SectionCard(
             }
             content()
         }
+    }
+}
+
+@Preview
+@Composable
+fun SectionCardPreview() {
+    CareConnectTheme(darkTheme = false) {
+        SectionCard(title = "Kontakt", icon = Icons.Default.Phone) { Text("030 1234567") }
     }
 }
