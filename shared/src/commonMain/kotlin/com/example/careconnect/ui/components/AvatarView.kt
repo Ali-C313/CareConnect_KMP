@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
+import com.example.careconnect.i18n.tr
 
 /**
  * Rundes Profilbild, ohne Bild werden die Initialen angezeigt.
@@ -49,7 +50,7 @@ fun AvatarView(
         if (imageUrl.isNotEmpty()) {
             AsyncImage(
                 model = imageUrl,
-                contentDescription = "Profilbild",
+                contentDescription = tr("Profilbild"),
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxSize()
             )
