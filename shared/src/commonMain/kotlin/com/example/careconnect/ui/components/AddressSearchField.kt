@@ -21,8 +21,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.careconnect.domain.model.AddressSuggestion
+import com.example.careconnect.i18n.tr
+import com.example.careconnect.mock.MockData
+import com.example.careconnect.ui.theme.CareConnectTheme
 
 /**
  * Textfeld mit Adressvorschlägen darunter (Vorschläge kommen aus dem ViewModel).
@@ -34,7 +38,7 @@ fun AddressSearchField(
     suggestions: List<AddressSuggestion>,
     onSuggestionClick: (AddressSuggestion) -> Unit,
     modifier: Modifier = Modifier,
-    label: String = "Adresse"
+    label: String = tr("Adresse")
 ) {
     Column(
         modifier = modifier.fillMaxWidth(),
@@ -81,5 +85,18 @@ fun AddressSearchField(
                 }
             }
         }
+    }
+}
+
+@Preview
+@Composable
+fun AddressSearchFieldPreview() {
+    CareConnectTheme(darkTheme = false) {
+        AddressSearchField(
+            value = "Torstr",
+            onValueChange = {},
+            suggestions = listOf(AddressSuggestion("Torstraße 12, 10119 Berlin", MockData.patientLocation)),
+            onSuggestionClick = {}
+        )
     }
 }
