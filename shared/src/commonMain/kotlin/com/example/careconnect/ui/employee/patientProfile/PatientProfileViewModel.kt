@@ -3,11 +3,15 @@ package com.example.careconnect.ui.employee.patientProfile
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.careconnect.domain.model.AddressSuggestion
-import com.example.careconnect.domain.model.Coordinate
+import com.example.careconnect.domain.model.Appointment
 import com.example.careconnect.domain.model.EmergencyContact
+import com.example.careconnect.domain.model.MedicineEntry
 import com.example.careconnect.domain.model.Patient
+import com.example.careconnect.domain.repository.AppointmentRepository
 import com.example.careconnect.domain.repository.GeoRepository
+import com.example.careconnect.domain.repository.MedicineRepository
 import com.example.careconnect.domain.repository.PatientRepository
+import com.example.careconnect.util.currentTimeMillis
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -19,15 +23,17 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.transformLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class PatientProfileViewModel(
     private val patientRepo: PatientRepository,
-    private val geoRepo: GeoRepository
+    private val geoRepo: GeoRepository,
+    medicineRepo: MedicineRepository,
+    appointmentRepo: AppointmentRepository
 ) : ViewModel() {
 
     private val patientId = MutableStateFlow<String?>(null)
@@ -37,12 +43,34 @@ class PatientProfileViewModel(
         .flatMapLatest { patientRepo.getPatient(it) }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
+    // Medikamente, die der Patient selbst in seiner App pflegt
+    val medicines: StateFlow<List<MedicineEntry>> = patientId
+        .filterNotNull()
+        .flatMapLatest { medicineRepo.getMedicines(it) }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
+    // Nur kommende Termine
+    val appointments: StateFlow<List<Appointment>> = patientId
+        .filterNotNull()
+        .flatMapLatest { appointmentRepo.getAppointments(it) }
+        .map { list -> list.filter { it.date >= currentTimeMillis() } }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
     // Adresse -> Koordinate für die Karte
-    val coordinate: StateFlow<Coordinate?> = patient
-        .map { it?.fullAddress ?: "" }
+    val location: StateFlow<AddressLocation> = patient
+        .filterNotNull()
+        .map { it.fullAddress }
         .distinctUntilChanged()
-        .mapLatest { address -> geoRepo.geocode(address).getOrNull() }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
+        .transformLatest { address ->
+            if (address.isBlank()) {
+                emit(AddressLocation.NotFound)
+            } else {
+                emit(AddressLocation.Loading)
+                val coordinate = geoRepo.geocode(address).getOrNull()
+                emit(if (coordinate != null) AddressLocation.Found(coordinate) else AddressLocation.NotFound)
+            }
+        }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), AddressLocation.Loading)
 
     // Notfallkontakt-Editor
     private val _editContact = MutableStateFlow(EmergencyContact())
