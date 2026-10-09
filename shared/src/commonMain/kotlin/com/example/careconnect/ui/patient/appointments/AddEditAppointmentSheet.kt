@@ -37,13 +37,20 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.careconnect.i18n.tr
+import com.example.careconnect.mock.MockData
+import com.example.careconnect.mock.repository.AppointmentRepositoryMock
+import com.example.careconnect.mock.repository.AuthRepositoryMock
+import com.example.careconnect.mock.repository.GeoRepositoryMock
 import com.example.careconnect.ui.components.AddressSearchField
 import com.example.careconnect.ui.components.CareTextField
 import com.example.careconnect.ui.components.DateTimePickerField
+import com.example.careconnect.ui.theme.CareConnectTheme
 
-private val defaultBringItems = listOf("Ausweis", "Krankenkassenkarte", "Überweisung", "Bericht")
-
+// get(), damit die Liste beim Sprachwechsel neu übersetzt wird
+private val defaultBringItems get() = listOf(tr("Ausweis"), tr("Krankenkassenkarte"), tr("Überweisung"), tr("Bericht"))
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddEditAppointmentSheet(
@@ -67,13 +74,13 @@ fun AddEditAppointmentSheet(
             verticalArrangement = Arrangement.spacedBy(14.dp)
         ) {
             Text(
-                text = if (form.editingId != null) "Termin bearbeiten" else "Termin hinzufügen",
+                text = if (form.editingId != null) tr("Termin bearbeiten") else tr("Termin hinzufügen"),
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold
             )
 
             // Termin Details
-            CareTextField("Wo/Was (z. B. Arztbesuch)", form.what, viewModel::onWhatChange, icon = Icons.Default.Edit)
+            CareTextField(tr("Wo/Was (z. B. Arztbesuch)"), form.what, viewModel::onWhatChange, icon = Icons.Default.Edit)
             AddressSearchField(
                 value = form.address,
                 onValueChange = viewModel::onAddressChange,
@@ -81,17 +88,17 @@ fun AddEditAppointmentSheet(
                 onSuggestionClick = viewModel::onSuggestionClick
             )
             DateTimePickerField(
-                label = "Datum & Uhrzeit",
+                label = tr("Datum & Uhrzeit"),
                 millis = form.date,
                 onValueChange = viewModel::onDateChange
             )
 
             // Mitbringen
-            Text("Mitbringen (optional)", style = MaterialTheme.typography.labelLarge)
+            Text(tr("Mitbringen (optional)"), style = MaterialTheme.typography.labelLarge)
             Box {
                 AssistChip(
                     onClick = { itemMenuExpanded = true },
-                    label = { Text("Gegenstand hinzufügen") },
+                    label = { Text(tr("Gegenstand hinzufügen")) },
                     leadingIcon = { Icon(Icons.Default.ShoppingBag, contentDescription = null) }
                 )
                 DropdownMenu(
@@ -108,7 +115,7 @@ fun AddEditAppointmentSheet(
                         )
                     }
                     DropdownMenuItem(
-                        text = { Text("+ Anderes hinzufügen...") },
+                        text = { Text(tr("+ Anderes hinzufügen...")) },
                         onClick = {
                             itemMenuExpanded = false
                             showCustomItemDialog = true
@@ -127,19 +134,19 @@ fun AddEditAppointmentSheet(
                             selected = true,
                             onClick = { viewModel.removeBringItem(item) },
                             label = { Text(item) },
-                            trailingIcon = { Icon(Icons.Default.Close, contentDescription = "Entfernen") }
+                            trailingIcon = { Icon(Icons.Default.Close, contentDescription = tr("Entfernen")) }
                         )
                     }
                 }
                 Text(
-                    "(Zum Entfernen tippen)",
+                    tr("(Zum Entfernen tippen)"),
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
 
             CareTextField(
-                "Bemerkungen (optional)",
+                tr("Bemerkungen (optional)"),
                 form.notes,
                 viewModel::onNotesChange,
                 icon = Icons.AutoMirrored.Filled.Notes,
@@ -148,7 +155,7 @@ fun AddEditAppointmentSheet(
 
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 OutlinedButton(onClick = onDismiss, modifier = Modifier.weight(1f)) {
-                    Text("Abbrechen")
+                    Text(tr("Abbrechen"))
                 }
                 Button(
                     onClick = {
@@ -158,7 +165,7 @@ fun AddEditAppointmentSheet(
                     enabled = form.canSave,
                     modifier = Modifier.weight(1f)
                 ) {
-                    Text("Speichern")
+                    Text(tr("Speichern"))
                 }
             }
         }
@@ -167,8 +174,8 @@ fun AddEditAppointmentSheet(
     if (showCustomItemDialog) {
         AlertDialog(
             onDismissRequest = { showCustomItemDialog = false },
-            title = { Text("Neuen Gegenstand hinzufügen") },
-            text = { CareTextField("Gegenstand", customItem, { customItem = it }) },
+            title = { Text(tr("Neuen Gegenstand hinzufügen")) },
+            text = { CareTextField(tr("Gegenstand"), customItem, { customItem = it }) },
             confirmButton = {
                 TextButton(onClick = {
                     viewModel.addBringItem(customItem)
@@ -176,15 +183,30 @@ fun AddEditAppointmentSheet(
                     showCustomItemDialog = false
                 }) {
                     Icon(Icons.Default.Add, contentDescription = null)
-                    Text("Hinzufügen")
+                    Text(tr("Hinzufügen"))
                 }
             },
             dismissButton = {
                 TextButton(onClick = {
                     customItem = ""
                     showCustomItemDialog = false
-                }) { Text("Abbrechen") }
+                }) { Text(tr("Abbrechen")) }
             }
+        )
+    }
+}
+
+@Preview
+@Composable
+fun AddEditAppointmentSheetPreview() {
+    CareConnectTheme(darkTheme = false) {
+        AddEditAppointmentSheet(
+            viewModel = AppointmentsViewModel(
+                AppointmentRepositoryMock(),
+                GeoRepositoryMock(),
+                AuthRepositoryMock(MockData.patient.id)
+            ),
+            onDismiss = {}
         )
     }
 }
