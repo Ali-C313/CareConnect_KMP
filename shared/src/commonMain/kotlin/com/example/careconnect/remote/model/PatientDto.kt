@@ -1,6 +1,6 @@
 package com.example.careconnect.remote.model
 
-import com.example.careconnect.domain.model.EmergencyContact
+import com.example.careconnect.domain.model.LinkedOrg
 import com.example.careconnect.domain.model.Medication
 import com.example.careconnect.domain.model.Patient
 import dev.gitlive.firebase.firestore.Timestamp
@@ -25,43 +25,10 @@ data class PatientDto(
     val medications: List<MedicationDto>? = null,
     val history: List<String>? = null,
     val emergencyContact: EmergencyContactDto? = null,
-    val createdAt: Timestamp? = null
+    val createdAt: Timestamp? = null,
+    val linkedOrgIds: List<String>? = null,
+    val linkedOrgs: List<LinkedOrgDto>? = null
 )
-
-@Serializable
-data class MedicationDto(
-    val id: String? = null,
-    val name: String? = null
-)
-
-@Serializable
-data class EmergencyContactDto(
-    val name: String? = null,
-    val relation: String? = null,
-    val phone: String? = null,
-    val email: String? = null,
-    val address: String? = null,
-    val age: Int? = null
-)
-
-// Nur für Updates mit merge = true
-@Serializable
-data class EmergencyContactUpdateDto(
-    val emergencyContact: EmergencyContactDto
-)
-
-@Serializable
-data class PatientProfileUpdateDto(
-    val firstName: String,
-    val lastName: String,
-    val address: String,
-    val city: String,
-    val email: String,
-    val phone: String,
-    val allergies: String,
-    val medicalHistory: String
-)
-
 fun PatientDto.toPatient(id: String): Patient = Patient(
     id = id,
     firstName = firstName ?: "",
@@ -83,23 +50,9 @@ fun PatientDto.toPatient(id: String): Patient = Patient(
         )
     },
     history = history.orEmpty(),
-    emergencyContact = emergencyContact?.toEmergencyContact()
-)
-
-fun EmergencyContactDto.toEmergencyContact(): EmergencyContact = EmergencyContact(
-    name = name ?: "",
-    relation = relation ?: "",
-    phone = phone ?: "",
-    email = email ?: "",
-    address = address ?: "",
-    age = age
-)
-
-fun EmergencyContact.toDto(): EmergencyContactDto = EmergencyContactDto(
-    name = name,
-    relation = relation,
-    phone = phone,
-    email = email,
-    address = address,
-    age = age
+    emergencyContact = emergencyContact?.toEmergencyContact(),
+    linkedOrgs = linkedOrgs.orEmpty().mapNotNull { link ->
+        val orgId = link.orgId ?: return@mapNotNull null
+        LinkedOrg(orgId, link.orgName ?: "")
+    }
 )
