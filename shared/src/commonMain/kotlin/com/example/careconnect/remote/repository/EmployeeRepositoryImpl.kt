@@ -12,6 +12,8 @@ import com.example.careconnect.remote.model.EmployeeProfileUpdateDto
 import com.example.careconnect.remote.model.toEmployee
 import com.example.careconnect.remote.model.toEmployeeDocument
 import com.example.careconnect.remote.model.toTimestamp
+import com.example.careconnect.remote.org
+import com.example.careconnect.session.OrgSession
 import dev.gitlive.firebase.firestore.FirebaseFirestore
 import dev.gitlive.firebase.firestore.Timestamp
 import kotlinx.coroutines.flow.Flow
@@ -22,51 +24,36 @@ import kotlin.uuid.Uuid
 
 class EmployeeRepositoryImpl(
     private val db: FirebaseFirestore,
-    private val storageRepo: StorageRepository
+    private val storageRepo: StorageRepository,
+    private val session: OrgSession
 ) : EmployeeRepository {
 
-    private val employeesRef = db.collection(CollectionNames.EMPLOYEES)
+    private fun employeesRef(orgId: String = session.requireOrgId()) =
+        db.org(orgId).collection(CollectionNames.EMPLOYEES)
 
-    override fun getEmployees(): Flow<List<Employee>> = employeesRef.snapshots
-        .map { snapshot ->
-            // Kaputte Dokumente überspringen statt abzustürzen
-            snapshot.documents.mapNotNull { doc ->
-                runCatching { doc.data<EmployeeDto>().toEmployee(doc.id) }.getOrNull()
+    override fun getEmployees(): Flow<List<Employee>> = session.inOrg(emptyList()) { orgId ->
+        employeesRef(orgId).snapshots
+            .map { snapshot ->
+                // Kaputte Dokumente überspringen statt abzustürzen
+                snapshot.documents.mapNotNull { doc ->
+                    runCatching { doc.data<EmployeeDto>().toEmployee(doc.id) }.getOrNull()
+                }
             }
-        }
-        .catch { emit(emptyList()) }
+            .catch { emit(emptyList()) }
+    }
 
-    override fun getEmployee(id: String): Flow<Employee?> = employeesRef.document(id).snapshots
-        .map { doc ->
-            if (!doc.exists) null
-            else runCatching { doc.data<EmployeeDto>().toEmployee(doc.id) }.getOrNull()
-        }
-        .catch { emit(null) }
-
-    override suspend fun createEmployee(
-        uid: String,
-        firstName: String,
-        lastName: String,
-        email: String,
-        birthDate: Long?,
-        profileImageUrl: String
-    ): Result<Unit> = runCatching {
-        val dto = EmployeeDto(
-            uid = uid,
-            firstName = firstName,
-            lastName = lastName,
-            role = "Pflegekraft",
-            status = StaffStatus.AVAILABLE.displayName,
-            email = email,
-            birthDate = birthDate?.toTimestamp(),
-            profileImageURL = profileImageUrl
-        )
-        employeesRef.document(uid).set(EmployeeDto.serializer(), dto, merge = true)
+    override fun getEmployee(id: String): Flow<Employee?> = session.inOrg(null) { orgId ->
+        employeesRef(orgId).document(id).snapshots
+            .map { doc ->
+                if (!doc.exists) null
+                else runCatching { doc.data<EmployeeDto>().toEmployee(doc.id) }.getOrNull()
+            }
+            .catch { emit(null) }
     }
 
     override suspend fun updateStatus(id: String, status: StaffStatus): Result<Unit> = runCatching {
-        employeesRef.document(id).updateFields {
-            "status" to status.displayName
+        employeesRef().document(id).updateFields {
+            "status" to status.value
         }
     }
 
@@ -78,17 +65,17 @@ class EmployeeRepositoryImpl(
         email: String
     ): Result<Unit> = runCatching {
         val dto = EmployeeProfileUpdateDto(firstName, lastName, role, email)
-        employeesRef.document(id).set(EmployeeProfileUpdateDto.serializer(), dto, merge = true)
+        employeesRef().document(id).set(EmployeeProfileUpdateDto.serializer(), dto, merge = true)
     }
 
     override suspend fun updateProfileImage(id: String, url: String): Result<Unit> = runCatching {
-        employeesRef.document(id).updateFields {
+        employeesRef().document(id).updateFields {
             "profileImageURL" to url
         }
     }
 
-    override fun getDocuments(employeeId: String): Flow<List<EmployeeDocument>> =
-        employeesRef.document(employeeId).collection(CollectionNames.DOCUMENTS).snapshots
+    override fun getDocuments(employeeId: String): Flow<List<EmployeeDocument>> = session.inOrg(emptyList()) { orgId ->
+        employeesRef(orgId).document(employeeId).collection(CollectionNames.DOCUMENTS).snapshots
             .map { snapshot ->
                 snapshot.documents
                     .mapNotNull { doc ->
@@ -97,6 +84,7 @@ class EmployeeRepositoryImpl(
                     .sortedByDescending { it.uploadedAt ?: 0L }
             }
             .catch { emit(emptyList()) }
+    }
 
     @OptIn(ExperimentalUuidApi::class)
     override suspend fun addDocument(
@@ -113,14 +101,14 @@ class EmployeeRepositoryImpl(
             uploadedAt = Timestamp.now(),
             storagePath = path
         )
-        employeesRef.document(employeeId)
+        employeesRef().document(employeeId)
             .collection(CollectionNames.DOCUMENTS)
             .add(EmployeeDocumentDto.serializer(), dto)
         Unit
     }
 
     override suspend fun deleteDocument(employeeId: String, documentId: String): Result<Unit> = runCatching {
-        val docRef = employeesRef.document(employeeId)
+        val docRef = employeesRef().document(employeeId)
             .collection(CollectionNames.DOCUMENTS)
             .document(documentId)
 
