@@ -35,9 +35,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.careconnect.i18n.tr
+import com.example.careconnect.mock.MockData
+import com.example.careconnect.mock.repository.AuthRepositoryMock
+import com.example.careconnect.mock.repository.OrderRepositoryMock
+import com.example.careconnect.mock.repository.PatientRepositoryMock
 import com.example.careconnect.ui.components.CareTopBar
 import com.example.careconnect.ui.components.EmergencyButton
 import com.example.careconnect.ui.theme.Accent
+import com.example.careconnect.ui.theme.CareConnectTheme
 import com.example.careconnect.ui.theme.StatusRed
 import com.example.careconnect.util.StringHelper
 import com.example.careconnect.util.openSafely
@@ -62,7 +68,7 @@ fun PatientHomeScreen(
                 )
             )
     ) {
-        CareTopBar(title = "Home")
+        CareTopBar(title = tr("Home"))
 
         Column(
             modifier = Modifier
@@ -80,13 +86,13 @@ fun PatientHomeScreen(
             )
 
             Text(
-                text = "Ihre Gesundheit in besten Händen.",
+                text = tr("Ihre Gesundheit in besten Händen."),
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.SemiBold,
                 textAlign = TextAlign.Center
             )
             Text(
-                text = "Willkommen bei CareConnect – Ihr Partner für eine verlässliche Versorgung.",
+                text = tr("Willkommen bei CareConnect – Ihr Partner für eine verlässliche Versorgung."),
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center
             )
@@ -103,7 +109,7 @@ fun PatientHomeScreen(
                     .height(52.dp)
             ) {
                 Icon(Icons.Default.Search, contentDescription = null)
-                Text("  Zu meinen Aufträgen", fontWeight = FontWeight.SemiBold)
+                Text(tr("  Zu meinen Aufträgen"), fontWeight = FontWeight.SemiBold)
             }
 
             Spacer(Modifier.height(24.dp))
@@ -117,33 +123,36 @@ fun PatientHomeScreen(
     }
 
     if (showEmergencyDialog) {
-        // Notfallkontakt aus dem Profil, sonst Notruf 112
-        val emergencyPhone = patient?.emergencyContact?.phone?.ifBlank { null } ?: "112"
+        val contactPhone = patient?.emergencyContact?.phone?.ifBlank { null }
 
         AlertDialog(
             onDismissRequest = { showEmergencyDialog = false },
-            title = { Text("Notfallaktion") },
+            title = { Text(tr("Notfallaktion")) },
             text = {
                 Column {
-                    Text("Wählen Sie eine Notfallaktion aus:")
+                    Text(tr("Wählen Sie eine Notfallaktion aus:"))
+                    // 112 steht immer ganz oben
+                    TextButton(onClick = {
+                        showEmergencyDialog = false
+                        uriHandler.openSafely("tel:112")
+                    }) {
+                        Text(tr("Notruf 112 anrufen"), color = StatusRed, fontWeight = FontWeight.Bold)
+                    }
+                    contactPhone?.let { phone ->
+                        TextButton(onClick = {
+                            showEmergencyDialog = false
+                            uriHandler.openSafely("tel:${StringHelper.formattedPhone(phone)}")
+                        }) { Text(tr("Notfallkontakt anrufen")) }
+                    }
                     TextButton(onClick = {
                         showEmergencyDialog = false
                         viewModel.createEmergencyOrder()
-                    }) { Text("Dringlichen Auftrag erstellen") }
-                    TextButton(onClick = {
-                        showEmergencyDialog = false
-                        uriHandler.openSafely("tel:${StringHelper.formattedPhone(emergencyPhone)}")
-                    }) {
-                        Text(
-                            if (emergencyPhone == "112") "Notruf 112 anrufen" else "Notfallkontakt anrufen",
-                            color = StatusRed
-                        )
-                    }
+                    }) { Text(tr("Pflegedienst rufen (dringender Auftrag)")) }
                 }
             },
             confirmButton = {},
             dismissButton = {
-                TextButton(onClick = { showEmergencyDialog = false }) { Text("Abbrechen") }
+                TextButton(onClick = { showEmergencyDialog = false }) { Text(tr("Abbrechen")) }
             }
         )
     }
@@ -151,7 +160,7 @@ fun PatientHomeScreen(
     message?.let { text ->
         AlertDialog(
             onDismissRequest = viewModel::dismissMessage,
-            title = { Text("Notfall") },
+            title = { Text(tr("Notfall")) },
             text = { Text(text) },
             confirmButton = { TextButton(onClick = viewModel::dismissMessage) { Text("OK") } }
         )
@@ -161,5 +170,14 @@ fun PatientHomeScreen(
 @Preview
 @Composable
 fun PatientHomeScreenPreview() {
-    PatientHomeScreen(onOrdersClick = {})
+    CareConnectTheme(darkTheme = false) {
+        PatientHomeScreen(
+            onOrdersClick = {},
+            viewModel = PatientHomeViewModel(
+                OrderRepositoryMock(),
+                AuthRepositoryMock(MockData.patient.id),
+                PatientRepositoryMock()
+            )
+        )
+    }
 }
