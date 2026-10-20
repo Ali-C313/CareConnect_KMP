@@ -1,4 +1,4 @@
-<img src="docs/images/banner.png" alt="CareConnect – Pflege. Vernetzt. In Echtzeit." width="100%"/>
+![CareConnect – Pflege. Vernetzt. In Echtzeit.](docs/images/banner.png)
 
 ![Kotlin](https://img.shields.io/badge/Kotlin-2.4-7F52FF?style=for-the-badge&logo=kotlin&logoColor=white)
 ![Compose Multiplatform](https://img.shields.io/badge/Compose_Multiplatform-1.12-4285F4?style=for-the-badge&logo=jetpackcompose&logoColor=white)
@@ -49,12 +49,7 @@ Beim Abschließen eines Auftrags wird dokumentiert, was gemacht wurde, und der P
 
 ## 📱 Einblicke
 
-|                                   Live-Tracking                                   |                               Meine Aufträge                                |                              Mitarbeiter-Home                               |                                 Sprachauswahl                                 |
-| :-------------------------------------------------------------------------------: | :-------------------------------------------------------------------------: | :-------------------------------------------------------------------------: | :---------------------------------------------------------------------------: |
-| <img src="docs/images/screen-live-tracking.png" width="200" alt="Live-Tracking"/> | <img src="docs/images/screen-orders.png" width="200" alt="Meine Aufträge"/> | <img src="docs/images/screen-home.png" width="200" alt="Mitarbeiter-Home"/> | <img src="docs/images/screen-languages.png" width="200" alt="Sprachauswahl"/> |
-|                          Route, Ankunftszeit und Status                           |                        Laufender Auftrag immer oben                         |                         Status, Tagestour und Team                          |                             Wechsel ohne Neustart                             |
-
-<sub>Design-Vorschau der wichtigsten Screens</sub>
+![Design-Vorschau der wichtigsten Screens](docs/images/screens-overview.png)
 
 ---
 
@@ -98,11 +93,11 @@ Beim Abschließen eines Auftrags wird dokumentiert, was gemacht wurde, und der P
 
 ### Vom Notruf bis zur Ankunft
 
-<img src="docs/images/flow-emergency.png" alt="Ablauf vom Notruf bis zur Ankunft" width="100%"/>
+![Ablauf vom Notruf bis zur Ankunft](docs/images/flow-emergency.png)
 
 ### Wer arbeitet mit wem?
 
-<img src="docs/images/flow-roles.png" alt="Zusammenarbeit zwischen Praxis, Pflegedienst und Patient" width="100%"/>
+![Zusammenarbeit zwischen Praxis, Pflegedienst und Patient](docs/images/flow-roles.png)
 
 ---
 
@@ -110,7 +105,7 @@ Beim Abschließen eines Auftrags wird dokumentiert, was gemacht wurde, und der P
 
 CareConnect folgt **MVVM mit Repository Pattern** und strikter Trennung der Schichten. Die Oberfläche kennt nur ViewModels, ViewModels kennen nur Repository-**Interfaces** – woher die Daten kommen, ist austauschbar.
 
-<img src="docs/images/architecture.png" alt="Architektur von CareConnect" width="100%"/>
+![Architektur von CareConnect](docs/images/architecture.png)
 
 ### Wichtige Entscheidungen
 
