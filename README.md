@@ -1,4 +1,4 @@
-<img src="docs/images/banner.svg" alt="CareConnect – Pflege. Vernetzt. In Echtzeit." width="100%"/>
+<img src="docs/images/banner.png" alt="CareConnect – Pflege. Vernetzt. In Echtzeit." width="100%"/>
 
 ![Kotlin](https://img.shields.io/badge/Kotlin-2.4-7F52FF?style=for-the-badge&logo=kotlin&logoColor=white)
 ![Compose Multiplatform](https://img.shields.io/badge/Compose_Multiplatform-1.12-4285F4?style=for-the-badge&logo=jetpackcompose&logoColor=white)
@@ -51,7 +51,7 @@ Beim Abschließen eines Auftrags wird dokumentiert, was gemacht wurde, und der P
 
 |                                   Live-Tracking                                   |                               Meine Aufträge                                |                              Mitarbeiter-Home                               |                                 Sprachauswahl                                 |
 | :-------------------------------------------------------------------------------: | :-------------------------------------------------------------------------: | :-------------------------------------------------------------------------: | :---------------------------------------------------------------------------: |
-| <img src="docs/images/screen-live-tracking.svg" width="200" alt="Live-Tracking"/> | <img src="docs/images/screen-orders.svg" width="200" alt="Meine Aufträge"/> | <img src="docs/images/screen-home.svg" width="200" alt="Mitarbeiter-Home"/> | <img src="docs/images/screen-languages.svg" width="200" alt="Sprachauswahl"/> |
+| <img src="docs/images/screen-live-tracking.png" width="200" alt="Live-Tracking"/> | <img src="docs/images/screen-orders.png" width="200" alt="Meine Aufträge"/> | <img src="docs/images/screen-home.png" width="200" alt="Mitarbeiter-Home"/> | <img src="docs/images/screen-languages.png" width="200" alt="Sprachauswahl"/> |
 |                          Route, Ankunftszeit und Status                           |                        Laufender Auftrag immer oben                         |                         Status, Tagestour und Team                          |                             Wechsel ohne Neustart                             |
 
 <sub>Design-Vorschau der wichtigsten Screens</sub>
@@ -98,49 +98,11 @@ Beim Abschließen eines Auftrags wird dokumentiert, was gemacht wurde, und der P
 
 ### Vom Notruf bis zur Ankunft
 
-```mermaid
-sequenceDiagram
-    autonumber
-    actor P as Patient
-    participant A as CareConnect
-    participant F as Firestore
-    actor M as Pflegekraft
-
-    P->>A: Tippt auf "Pflegedienst rufen"
-    A->>F: Notfallauftrag anlegen, Status offen
-    F-->>M: Benachrichtigung "Neuer Auftrag", nur wenn verfügbar
-    M->>A: Auftrag annehmen
-    A->>F: Transaktion, Status aktuell
-    F-->>P: Benachrichtigung "Auftrag angenommen"
-    M->>A: Standort teilen
-    loop alle 10 Sekunden während der Fahrt
-        A->>F: Standort hochladen
-        F-->>P: Auto bewegt sich, Route und Ankunftszeit
-    end
-    M->>A: Abschließen mit Notiz und Unterschrift
-    A->>F: Status erledigt, Standort gelöscht
-    F-->>P: Benachrichtigung "Auftrag erledigt" mit Leistungsnachweis
-```
+<img src="docs/images/flow-emergency.png" alt="Ablauf vom Notruf bis zur Ankunft" width="100%"/>
 
 ### Wer arbeitet mit wem?
 
-```mermaid
-flowchart LR
-    subgraph Praxis["Arztpraxis oder Klinik"]
-        D["Ärztin"]
-    end
-    subgraph Pflege["Pflegedienst"]
-        L["Leitung"]
-        K["Pflegekräfte"]
-    end
-    P(("Patient"))
-
-    D -- "Verordnung" --> L
-    P -. "Freigabe für die Praxis" .-> D
-    L -- "plant Einsätze" --> K
-    K -- "Live-Standort und Nachweis" --> P
-    P -- "Notruf oder Auftrag" --> K
-```
+<img src="docs/images/flow-roles.png" alt="Zusammenarbeit zwischen Praxis, Pflegedienst und Patient" width="100%"/>
 
 ---
 
@@ -148,35 +110,7 @@ flowchart LR
 
 CareConnect folgt **MVVM mit Repository Pattern** und strikter Trennung der Schichten. Die Oberfläche kennt nur ViewModels, ViewModels kennen nur Repository-**Interfaces** – woher die Daten kommen, ist austauschbar.
 
-```mermaid
-flowchart TB
-    subgraph UI["UI mit Compose Multiplatform"]
-        S["Screens und Komponenten"]
-        VM["ViewModels mit StateFlow"]
-    end
-    subgraph Domain["Domain"]
-        R["Repository-Interfaces"]
-        MO["Models"]
-    end
-    subgraph Data["Data"]
-        RI["RepositoryImpl: Firestore, Storage, Auth"]
-        DS["DataStore: Einstellungen"]
-        API["Ktor: Routing"]
-        MK["RepositoryMock: für Previews"]
-    end
-    subgraph Platform["Plattform mit expect und actual"]
-        AND["Android: osmdroid, FusedLocation, NotificationManager"]
-        IOS["iOS: MapKit, CoreLocation, UserNotifications"]
-    end
-
-    S --> VM --> R
-    R --> MO
-    RI -. implementiert .-> R
-    MK -. implementiert .-> R
-    RI --> DS
-    RI --> API
-    S --> Platform
-```
+<img src="docs/images/architecture.png" alt="Architektur von CareConnect" width="100%"/>
 
 ### Wichtige Entscheidungen
 
@@ -286,11 +220,9 @@ git clone https://github.com/Ali-C313/CareConnect_Android.git
 
 Für iOS `iosApp/iosApp.xcodeproj` in Xcode öffnen, das Team in `iosApp/Configuration/Config.xcconfig` eintragen und starten.
 
-> [!TIP]
-> Zum Testen des Live-Trackings im Emulator unter **⋯ → Location → Routes** eine Strecke abspielen – das Auto fährt auf dem Handy des Patienten mit.
+> 💡 **Tipp:** Zum Testen des Live-Trackings im Emulator unter **⋯ → Location → Routes** eine Strecke abspielen – das Auto fährt auf dem Handy des Patienten mit.
 
-> [!NOTE]
-> In `remote/Secrets.kt` kann optional ein API-Key von `Geoapify` für Adressvorschläge beim Tippen hinterlegt werden. Ohne Key nutzt die App den Geocoder des Geräts.
+> ℹ️ **Hinweis:** In `remote/Secrets.kt` kann optional ein API-Key von `Geoapify` für Adressvorschläge beim Tippen hinterlegt werden. Ohne Key nutzt die App den Geocoder des Geräts.
 
 ---
 
