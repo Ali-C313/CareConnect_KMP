@@ -21,6 +21,7 @@ import com.example.careconnect.ui.settings.SettingsViewModel
 import com.example.careconnect.ui.theme.CareConnectTheme
 import org.koin.compose.viewmodel.koinViewModel
 
+// Einstellungen für Mitarbeiter
 @Composable
 fun EmployeeSettingsScreen(
     onEditProfileClick: () -> Unit,
