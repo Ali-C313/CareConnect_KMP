@@ -1,5 +1,6 @@
 package com.example.careconnect.domain.model
 
+// Marker für die Karte
 data class MapMarker(
     val title: String,
     val coordinate: Coordinate,
