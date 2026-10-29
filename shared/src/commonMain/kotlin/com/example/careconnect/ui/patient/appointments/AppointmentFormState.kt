@@ -3,6 +3,7 @@ package com.example.careconnect.ui.patient.appointments
 import com.example.careconnect.domain.model.AddressSuggestion
 import com.example.careconnect.util.currentTimeMillis
 
+// Zustand des Termin-Formulars
 data class AppointmentFormState(
     val editingId: String? = null,
     val what: String = "",
