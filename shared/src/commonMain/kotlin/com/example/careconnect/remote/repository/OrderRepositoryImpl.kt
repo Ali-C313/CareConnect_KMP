@@ -21,6 +21,7 @@ import kotlinx.coroutines.flow.map
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
+// Aufträge über Firestore
 class OrderRepositoryImpl(
     private val db: FirebaseFirestore,
     private val session: OrgSession
