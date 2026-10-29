@@ -27,6 +27,7 @@ import com.example.careconnect.mock.MockData
 import com.example.careconnect.ui.theme.CareConnectTheme
 import com.example.careconnect.ui.theme.StatusRed
 
+// Zeile für ein Mitglied mit Rolle
 @Composable
 fun MemberRow(
     member: Member,
