@@ -1,5 +1,6 @@
 package com.example.careconnect.domain.model
 
+// Termin eines Patienten
 data class Appointment(
     val id: String = "",
     val what: String,
