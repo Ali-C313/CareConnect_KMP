@@ -11,7 +11,7 @@ import platform.CoreLocation.kCLAuthorizationStatusAuthorizedWhenInUse
 import platform.CoreLocation.kCLLocationAccuracyHundredMeters
 import platform.darwin.NSObject
 
-// Entspricht EmployeeLocationManager aus iOS
+// Standort auf iOS über CLLocationManager
 class IosLocationTracker : LocationTracker {
 
     private val manager = CLLocationManager()
@@ -34,6 +34,7 @@ class IosLocationTracker : LocationTracker {
     }
 }
 
+// Empfängt die Standorte vom CLLocationManager
 private class LocationDelegate(
     private val onLocation: (Coordinate) -> Unit
 ) : NSObject(), CLLocationManagerDelegateProtocol {
