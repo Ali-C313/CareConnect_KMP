@@ -149,6 +149,7 @@ private fun updateRoute(map: MapView, state: MapState, route: List<Coordinate>) 
     line.setPoints(if (route.size >= 2) route.map { it.toGeoPoint() } else emptyList())
 }
 
+// Marker auf der Karte anlegen, verschieben oder entfernen
 private fun updateMarkers(map: MapView, state: MapState, markers: List<MapMarker>) {
     val titles = markers.map { it.title }.toSet()
 
@@ -212,4 +213,5 @@ private fun carIcon(context: Context): Drawable? {
     return if (id != 0) context.getDrawable(id) else null
 }
 
+// Coordinate -> GeoPoint für osmdroid
 private fun Coordinate.toGeoPoint() = GeoPoint(latitude, longitude)
