@@ -10,6 +10,7 @@ import com.example.careconnect.domain.model.OrganizationType
 import com.example.careconnect.domain.model.UserProfile
 import kotlinx.coroutines.flow.Flow
 
+// Organisationen, Mitglieder, Einladungen und Anfragen
 interface OrganizationRepository {
     fun observeMemberships(uid: String): Flow<List<Membership>>
     fun observeOrganization(orgId: String): Flow<Organization?>
