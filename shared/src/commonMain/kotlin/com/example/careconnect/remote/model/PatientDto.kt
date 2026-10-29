@@ -6,7 +6,7 @@ import com.example.careconnect.domain.model.Patient
 import dev.gitlive.firebase.firestore.Timestamp
 import kotlinx.serialization.Serializable
 
-// Feldnamen wie in der iOS-App, damit die bestehende Datenbank passt
+// Feldnamen passen zur bestehenden Firestore-Datenbank
 @Serializable
 data class PatientDto(
     val uid: String? = null,
@@ -29,6 +29,8 @@ data class PatientDto(
     val linkedOrgIds: List<String>? = null,
     val linkedOrgs: List<LinkedOrgDto>? = null
 )
+
+// Firestore -> App-Model
 fun PatientDto.toPatient(id: String): Patient = Patient(
     id = id,
     firstName = firstName ?: "",
