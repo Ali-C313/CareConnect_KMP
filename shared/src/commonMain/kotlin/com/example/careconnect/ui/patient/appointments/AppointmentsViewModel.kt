@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+// Termine laden, speichern und löschen
 class AppointmentsViewModel(
     private val appointmentRepo: AppointmentRepository,
     private val geoRepo: GeoRepository,
