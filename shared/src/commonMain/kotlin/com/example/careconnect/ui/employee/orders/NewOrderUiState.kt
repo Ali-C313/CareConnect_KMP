@@ -2,6 +2,7 @@ package com.example.careconnect.ui.employee.orders
 
 import com.example.careconnect.util.currentTimeMillis
 
+// Zustand des Auftrags-Formulars
 data class NewOrderUiState(
     val existingOrderId: String? = null,
     val selectedPatientId: String = "",
