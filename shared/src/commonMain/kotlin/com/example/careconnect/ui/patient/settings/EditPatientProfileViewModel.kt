@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+// Lädt und speichert das eigene Patientenprofil
 class EditPatientProfileViewModel(
     private val patientRepo: PatientRepository,
     private val storageRepo: StorageRepository,
