@@ -1,4 +1,4 @@
-package com.example.careconnect.ui.components
+package com.example.careconnect.ui.patient.home
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.LocalIndication
@@ -35,6 +35,7 @@ import com.example.careconnect.i18n.tr
 import com.example.careconnect.ui.theme.CareConnectTheme
 import com.example.careconnect.ui.theme.StatusOrange
 
+// Großer Notruf-Button auf der Startseite
 @Composable
 fun EmergencyButton(
     onClick: () -> Unit,
@@ -42,7 +43,7 @@ fun EmergencyButton(
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
-    // Kleiner "Drück"-Effekt wie in iOS
+    // Kleiner "Drück"-Effekt
     val scale by animateFloatAsState(if (isPressed) 0.95f else 1f)
     val shape = RoundedCornerShape(30.dp)
 
