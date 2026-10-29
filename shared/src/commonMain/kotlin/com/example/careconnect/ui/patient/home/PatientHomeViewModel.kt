@@ -19,6 +19,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+// Profil und Notruf für die Startseite
 class PatientHomeViewModel(
     private val orderRepo: OrderRepository,
     authRepo: AuthRepository,
@@ -33,7 +34,7 @@ class PatientHomeViewModel(
     private val _message = MutableStateFlow<String?>(null)
     val message = _message.asStateFlow()
 
-    // Dringlicher Auftrag (createEmergencyOrder in iOS)
+    // Legt einen dringenden Auftrag an
     fun createEmergencyOrder() {
         val id = uid ?: return
         val current = patient.value
