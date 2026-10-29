@@ -6,6 +6,7 @@ import com.example.careconnect.domain.model.OrganizationType
 import dev.gitlive.firebase.firestore.Timestamp
 import kotlinx.serialization.Serializable
 
+// Beitrittsanfrage in Firestore
 @Serializable
 data class JoinRequestDto(
     val orgId: String? = null,
@@ -22,6 +23,8 @@ data class JoinRequestDto(
     val status: String? = null,
     val createdAt: Timestamp? = null
 )
+
+// Firestore -> App-Model
 fun JoinRequestDto.toJoinRequest(uid: String): JoinRequest = JoinRequest(
     orgId = orgId ?: "",
     orgName = orgName ?: "",
