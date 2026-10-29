@@ -5,8 +5,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.careconnect.ui.theme.CareConnectTheme
-import com.example.careconnect.ui.theme.color
 
+// Grauer Hinweis, wenn ein Abschnitt leer ist
 @Composable
 fun EmptyHint(text: String) {
     Text(text, color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.bodyMedium)
