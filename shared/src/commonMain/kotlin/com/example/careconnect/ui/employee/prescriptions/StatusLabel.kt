@@ -17,6 +17,7 @@ import com.example.careconnect.ui.theme.StatusGreen
 import com.example.careconnect.ui.theme.StatusOrange
 import com.example.careconnect.ui.theme.StatusRed
 
+// Farbiges Label für den Status
 @Composable
 fun StatusLabel(status: PrescriptionStatus) {
     val color: Color = when (status) {
