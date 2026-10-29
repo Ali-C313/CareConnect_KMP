@@ -37,6 +37,7 @@ import com.example.careconnect.ui.theme.StatusPurple
 import com.example.careconnect.ui.theme.StatusRed
 import org.koin.compose.viewmodel.koinViewModel
 
+// Medikamentenplan nach Tageszeit
 @Composable
 fun MedicineScreen(
     viewModel: MedicineViewModel = koinViewModel()
