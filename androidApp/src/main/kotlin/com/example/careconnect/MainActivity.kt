@@ -15,6 +15,7 @@ import com.example.careconnect.service.TrackingManager
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 
+// Einstieg der Android-App, fragt Berechtigungen ab und zeigt App()
 class MainActivity : ComponentActivity() {
 
     private val trackingManager: TrackingManager by inject()
