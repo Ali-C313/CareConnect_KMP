@@ -4,6 +4,7 @@ import com.example.careconnect.domain.model.CompletionReport
 import com.example.careconnect.domain.model.Order
 import kotlinx.coroutines.flow.Flow
 
+// Aufträge einer Organisation
 interface OrderRepository {
     fun getOrders(): Flow<List<Order>>
     fun getOrder(id: String): Flow<Order?>
