@@ -15,6 +15,7 @@ import platform.UserNotifications.UNUserNotificationCenter
 import platform.UserNotifications.UNUserNotificationCenterDelegateProtocol
 import platform.darwin.NSObject
 
+// Zeigt lokale Benachrichtigungen auf iOS
 class IosNotifier : Notifier {
 
     private val center = UNUserNotificationCenter.currentNotificationCenter()
