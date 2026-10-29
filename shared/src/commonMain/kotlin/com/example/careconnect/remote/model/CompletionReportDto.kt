@@ -4,6 +4,7 @@ import com.example.careconnect.domain.model.CompletionReport
 import dev.gitlive.firebase.firestore.Timestamp
 import kotlinx.serialization.Serializable
 
+// Leistungsnachweis in Firestore
 @Serializable
 data class CompletionReportDto(
     val note: String? = null,
@@ -13,6 +14,8 @@ data class CompletionReportDto(
     val completedBy: String? = null,
     val completedByName: String? = null
 )
+
+// Firestore -> App-Model
 fun CompletionReportDto.toReport(): CompletionReport = CompletionReport(
     note = note ?: "",
     signature = signature ?: "",
@@ -21,6 +24,8 @@ fun CompletionReportDto.toReport(): CompletionReport = CompletionReport(
     completedBy = completedBy ?: "",
     completedByName = completedByName ?: ""
 )
+
+// App-Model -> Firestore
 fun CompletionReport.toDto(): CompletionReportDto = CompletionReportDto(
     note = note,
     signature = signature,
