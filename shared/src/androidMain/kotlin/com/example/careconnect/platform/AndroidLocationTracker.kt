@@ -12,6 +12,7 @@ import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
 
+// Standort auf Android über FusedLocation
 class AndroidLocationTracker(
     private val context: Context
 ) : LocationTracker {
