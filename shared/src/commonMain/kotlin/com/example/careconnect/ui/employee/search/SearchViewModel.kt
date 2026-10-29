@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 
+// Suchtext und gefilterte Treffer
 class SearchViewModel(
     employeeRepo: EmployeeRepository,
     patientRepo: PatientRepository,
@@ -21,7 +22,7 @@ class SearchViewModel(
     private val _query = MutableStateFlow("")
     val query = _query.asStateFlow()
 
-    // Gleiche Filter wie filteredEmployees / filteredPatients / filteredOrders in iOS
+    // Filtert Mitarbeiter, Patienten und Aufträge nach dem Suchtext
     val results = combine(
         _query,
         employeeRepo.getEmployees(),
