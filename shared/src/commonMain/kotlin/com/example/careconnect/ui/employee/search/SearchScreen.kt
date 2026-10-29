@@ -39,6 +39,7 @@ import com.example.careconnect.ui.theme.CareConnectTheme
 import com.example.careconnect.util.StringHelper
 import org.koin.compose.viewmodel.koinViewModel
 
+// Suche nach Mitarbeitern, Patienten und Aufträgen
 @Composable
 fun SearchScreen(
     onBack: () -> Unit,
@@ -73,7 +74,7 @@ fun SearchScreen(
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            item { SectionTitle(tr("Mitarbeiter")) }
+            item { SearchSectionTitle(tr("Mitarbeiter")) }
             items(results.employees, key = { "e_${it.id}" }) { employee ->
                 SectionCard(modifier = Modifier.clickable { onEmployeeClick(employee.id) }) {
                     Row(
@@ -97,7 +98,7 @@ fun SearchScreen(
                 }
             }
 
-            item { SectionTitle(tr("Patienten")) }
+            item { SearchSectionTitle(tr("Patienten")) }
             items(results.patients, key = { "p_${it.id}" }) { patient ->
                 ResultRow(
                     icon = Icons.Default.Person,
@@ -107,7 +108,7 @@ fun SearchScreen(
                 )
             }
 
-            item { SectionTitle(tr("Aufträge")) }
+            item { SearchSectionTitle(tr("Aufträge")) }
             items(results.orders, key = { "o_${it.id}" }) { order ->
                 ResultRow(
                     icon = Icons.Default.Description,
