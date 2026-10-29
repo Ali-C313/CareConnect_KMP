@@ -31,7 +31,7 @@ import com.example.careconnect.ui.components.AddressSearchField
 import com.example.careconnect.ui.theme.CareConnectTheme
 
 /**
- * Formular für den Notfallkontakt (entspricht EmergencyContactEditorView).
+ * Formular für den Notfallkontakt.
  */
 @Composable
 fun EmergencyContactEditor(
