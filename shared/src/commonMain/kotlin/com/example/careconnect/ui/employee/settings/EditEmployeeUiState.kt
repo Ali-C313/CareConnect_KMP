@@ -1,5 +1,6 @@
 package com.example.careconnect.ui.employee.settings
 
+// Zustand des Profil-Formulars
 data class EditEmployeeUiState(
     val firstName: String = "",
     val lastName: String = "",
