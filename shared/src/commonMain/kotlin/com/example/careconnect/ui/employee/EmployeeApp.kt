@@ -33,7 +33,7 @@ import com.example.careconnect.ui.employee.search.SearchScreen
 import com.example.careconnect.ui.employee.settings.EditEmployeeProfileScreen
 import com.example.careconnect.ui.employee.settings.EmployeeSettingsScreen
 
-// Entspricht MainTabView aus iOS
+// Tab-Navigation für Mitarbeiter
 @Composable
 fun EmployeeApp(orgType: OrganizationType) {
     val navController = rememberNavController()
