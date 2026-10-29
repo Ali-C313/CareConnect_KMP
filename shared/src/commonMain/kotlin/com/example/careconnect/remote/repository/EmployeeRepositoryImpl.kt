@@ -11,7 +11,6 @@ import com.example.careconnect.remote.model.EmployeeDto
 import com.example.careconnect.remote.model.EmployeeProfileUpdateDto
 import com.example.careconnect.remote.model.toEmployee
 import com.example.careconnect.remote.model.toEmployeeDocument
-import com.example.careconnect.remote.model.toTimestamp
 import com.example.careconnect.remote.org
 import com.example.careconnect.session.OrgSession
 import dev.gitlive.firebase.firestore.FirebaseFirestore
@@ -22,6 +21,7 @@ import kotlinx.coroutines.flow.map
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
+// Mitarbeiter und Dokumente über Firestore
 class EmployeeRepositoryImpl(
     private val db: FirebaseFirestore,
     private val storageRepo: StorageRepository,
