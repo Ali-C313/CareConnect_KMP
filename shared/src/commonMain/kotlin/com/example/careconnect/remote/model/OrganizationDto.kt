@@ -5,6 +5,7 @@ import com.example.careconnect.domain.model.OrganizationType
 import dev.gitlive.firebase.firestore.Timestamp
 import kotlinx.serialization.Serializable
 
+// Organisation in Firestore
 @Serializable
 data class OrganizationDto(
     val name: String? = null,
@@ -13,6 +14,8 @@ data class OrganizationDto(
     val ownerId: String? = null,
     val createdAt: Timestamp? = null
 )
+
+// Firestore -> App-Model
 fun OrganizationDto.toOrganization(id: String): Organization = Organization(
     id = id,
     name = name ?: "",
