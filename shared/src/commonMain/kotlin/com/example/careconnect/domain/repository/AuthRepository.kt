@@ -2,6 +2,7 @@ package com.example.careconnect.domain.repository
 
 import kotlinx.coroutines.flow.Flow
 
+// Login, Registrierung und Passwort
 interface AuthRepository {
     // UID des eingeloggten Users oder null
     val authState: Flow<String?>
