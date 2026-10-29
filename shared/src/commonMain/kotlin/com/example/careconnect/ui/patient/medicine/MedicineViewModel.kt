@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
+// Medikamente laden, hinzufügen und löschen
 class MedicineViewModel(
     private val medicineRepo: MedicineRepository,
     authRepo: AuthRepository
