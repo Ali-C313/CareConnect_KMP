@@ -28,8 +28,8 @@ import com.example.careconnect.i18n.tr
 import com.example.careconnect.mock.MockData
 import com.example.careconnect.ui.theme.CareConnectTheme
 import com.example.careconnect.ui.theme.StatusRed
-import com.example.careconnect.ui.theme.color
 
+// Zeile für ein Dokument mit Öffnen und Löschen
 @Composable
 fun DocumentRow(
     document: EmployeeDocument,
