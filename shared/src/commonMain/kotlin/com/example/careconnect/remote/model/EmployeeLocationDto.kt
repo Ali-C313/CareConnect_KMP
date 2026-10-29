@@ -11,6 +11,8 @@ data class EmployeeLocationDto(
     val lon: Double? = null,
     val updatedAt: Timestamp? = null
 )
+
+// Firestore -> App-Model
 fun EmployeeLocationDto.toCoordinate(): Coordinate? {
     val latitude = lat ?: return null
     val longitude = lon ?: return null
