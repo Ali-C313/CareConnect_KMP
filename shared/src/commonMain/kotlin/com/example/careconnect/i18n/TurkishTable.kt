@@ -355,7 +355,7 @@ internal val turkishTable: Map<String, String> = mapOf(
     "ab {0}" to "{0} itibarıyla",
     "{0} wählen" to "{0} seç",
     "{0} Std/Woche" to "{0} sa/hafta",
-    // Texte aus dem alten Strings-Interface
+    // Einstellungen, Aufträge und Live-Standort
     "Hausbesuche" to "Ev ziyaretleri",
     "Medizin" to "İlaçlar",
     "Einstellungen" to "Ayarlar",
@@ -389,7 +389,6 @@ internal val turkishTable: Map<String, String> = mapOf(
     "Hier erscheinen deine Aufträge, sobald einer angelegt wurde." to "Bir görev oluşturulduğunda burada görünecek.",
     "Keine offenen Aufträge." to "Açık görev yok.",
     "Keine erledigten Aufträge." to "Tamamlanmış görev yok.",
-    "Wartet auf einen Mitarbeiter" to "Bir çalışan bekleniyor",
     "Dieser Auftrag existiert nicht mehr." to "Bu görev artık mevcut değil.",
     "Erstellt" to "Oluşturuldu",
     "Kontaktieren" to "İletişime geç",
