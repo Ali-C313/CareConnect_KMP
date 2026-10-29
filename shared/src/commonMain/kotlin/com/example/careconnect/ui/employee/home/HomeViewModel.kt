@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
+// Daten für die Startseite der Mitarbeiter
 class HomeViewModel(
     private val employeeRepo: EmployeeRepository,
     orderRepo: OrderRepository,
