@@ -26,6 +26,7 @@ import com.example.careconnect.util.toAge
 import com.example.careconnect.util.toDateString
 import com.example.careconnect.util.toDateTimeString
 
+// Medikamente und Termine des Patienten
 @Composable
 fun MedicalSection(
     patient: Patient,
@@ -39,7 +40,7 @@ fun MedicalSection(
             }
         }
     } else if (patient.medications.isNotEmpty()) {
-        // Alte Einträge aus der iOS-App
+        // Medikamente direkt im Patientenprofil, falls keine Liste angelegt ist
         SectionCard(title = tr("Medikamente"), icon = Icons.Default.Medication, iconTint = StatusPurple) {
             patient.medications.forEach { med ->
                 Text("• ${med.name}")
