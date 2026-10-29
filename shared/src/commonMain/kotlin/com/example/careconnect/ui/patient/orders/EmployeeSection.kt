@@ -16,6 +16,7 @@ import com.example.careconnect.ui.components.SectionCard
 import com.example.careconnect.ui.theme.CareConnectTheme
 import com.example.careconnect.util.openSafely
 
+// Zuständiger Mitarbeiter mit Kontakt
 @Composable
 fun EmployeeSection(employee: Employee?) {
     val uriHandler = LocalUriHandler.current
