@@ -42,6 +42,7 @@ import kotlin.random.Random
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
+// Organisationen, Mitglieder, Einladungen und Anfragen über Firestore
 @OptIn(ExperimentalCoroutinesApi::class)
 class OrganizationRepositoryImpl(
     private val db: FirebaseFirestore
@@ -116,7 +117,7 @@ class OrganizationRepositoryImpl(
         orgId
     }
 
-    // Fehler (z.B. alte Regeln) zählen nicht als "entfernt", sonst würde die Mitgliedschaft gelöscht
+    // Ladefehler zählen nicht als "entfernt", sonst würde die Mitgliedschaft gelöscht
     override fun observeMemberRole(orgId: String, uid: String): Flow<MemberRole?> = memberRef(orgId, uid).snapshots
         .map { doc ->
             if (!doc.exists) null
