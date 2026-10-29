@@ -13,6 +13,8 @@ data class AppointmentDto(
     val bringItems: List<String>? = null,
     val notes: String? = null
 )
+
+// Firestore -> App-Model
 fun AppointmentDto.toAppointment(docId: String): Appointment = Appointment(
     id = docId,
     what = what ?: "",
@@ -21,6 +23,8 @@ fun AppointmentDto.toAppointment(docId: String): Appointment = Appointment(
     bringItems = bringItems.orEmpty(),
     notes = notes ?: ""
 )
+
+// App-Model -> Firestore
 fun Appointment.toDto(): AppointmentDto = AppointmentDto(
     what = what,
     address = address,
