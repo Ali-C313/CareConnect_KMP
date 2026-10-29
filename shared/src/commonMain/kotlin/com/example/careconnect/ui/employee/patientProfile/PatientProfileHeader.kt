@@ -28,8 +28,9 @@ import com.example.careconnect.ui.theme.CareConnectTheme
 import com.example.careconnect.util.StringHelper
 import com.example.careconnect.util.openSafely
 
+// Kopf mit Bild, Name und Notfall-Button
 @Composable
-fun ProfileHeader(
+fun PatientProfileHeader(
     patient: Patient,
     onEmergencyClick: () -> Unit
 ) {
@@ -84,8 +85,8 @@ fun ProfileHeader(
 
 @Preview
 @Composable
-fun ProfileHeaderPreview() {
+fun PatientProfileHeaderPreview() {
     CareConnectTheme(darkTheme = false) {
-        ProfileHeader(patient = MockData.patient, onEmergencyClick = {})
+        PatientProfileHeader(patient = MockData.patient, onEmergencyClick = {})
     }
 }
