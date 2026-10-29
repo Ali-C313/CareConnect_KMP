@@ -4,6 +4,7 @@ import android.app.Application
 import com.example.careconnect.di.initKoin
 import org.koin.android.ext.koin.androidContext
 
+// Startet Koin beim App-Start
 class CareConnectApp : Application() {
 
     override fun onCreate() {
