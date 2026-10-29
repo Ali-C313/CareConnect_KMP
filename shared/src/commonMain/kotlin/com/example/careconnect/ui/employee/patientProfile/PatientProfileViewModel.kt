@@ -28,6 +28,7 @@ import kotlinx.coroutines.flow.transformLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+// Lädt Patient, Medikamente und Termine und speichert den Notfallkontakt
 @OptIn(ExperimentalCoroutinesApi::class)
 class PatientProfileViewModel(
     private val patientRepo: PatientRepository,
