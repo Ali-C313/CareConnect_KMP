@@ -23,7 +23,6 @@ import com.example.careconnect.ui.components.CareMap
 import com.example.careconnect.ui.components.InfoRow
 import com.example.careconnect.ui.components.SectionCard
 import com.example.careconnect.ui.theme.CareConnectTheme
-import com.example.careconnect.ui.theme.icon
 import com.example.careconnect.util.currentTimeMillis
 import com.example.careconnect.util.openSafely
 import com.example.careconnect.util.toKmString
