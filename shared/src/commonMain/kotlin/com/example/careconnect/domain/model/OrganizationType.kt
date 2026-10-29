@@ -2,6 +2,7 @@ package com.example.careconnect.domain.model
 
 import com.example.careconnect.i18n.tr
 
+// Art der Organisation
 enum class OrganizationType(val value: String, private val label: String) {
     PFLEGEDIENST("pflegedienst", "Pflegedienst"),
     ARZTPRAXIS("arztpraxis", "Arztpraxis"),
