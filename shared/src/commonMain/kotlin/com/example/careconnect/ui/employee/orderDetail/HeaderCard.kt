@@ -14,10 +14,10 @@ import com.example.careconnect.mock.MockData
 import com.example.careconnect.ui.components.InfoRow
 import com.example.careconnect.ui.components.SectionCard
 import com.example.careconnect.ui.theme.CareConnectTheme
-import com.example.careconnect.ui.theme.color
 import com.example.careconnect.util.toAge
 import com.example.careconnect.util.toDateString
 
+// Kopf mit Titel und Patient des Auftrags
 @Composable
 fun HeaderCard(
     order: Order,
