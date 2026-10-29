@@ -2,7 +2,7 @@ package com.example.careconnect.domain.model
 
 import com.example.careconnect.i18n.tr
 
-// value = gleicher String wie in der iOS-App (Firestore-Feld "status"), bleibt deutsch
+// value wird so in Firestore gespeichert (Feld "status") und bleibt deutsch
 enum class StaffStatus(val value: String) {
     AVAILABLE("Verfügbar"),
     BUSY("Beschäftigt"),
