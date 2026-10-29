@@ -18,6 +18,7 @@ import com.example.careconnect.i18n.tr
 import com.example.careconnect.mock.MockData
 import com.example.careconnect.ui.theme.CareConnectTheme
 
+// Zeile für eine Beitrittsanfrage
 @Composable
 fun RequestRow(
     request: JoinRequest,
