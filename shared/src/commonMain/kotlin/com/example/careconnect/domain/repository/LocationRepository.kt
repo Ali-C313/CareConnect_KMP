@@ -3,6 +3,7 @@ package com.example.careconnect.domain.repository
 import com.example.careconnect.domain.model.Coordinate
 import kotlinx.coroutines.flow.Flow
 
+// Live-Standort der Mitarbeiter
 interface LocationRepository {
     fun observeEmployeeLocation(employeeId: String): Flow<Coordinate?>
     suspend fun uploadLocation(employeeId: String, coordinate: Coordinate): Result<Unit>
