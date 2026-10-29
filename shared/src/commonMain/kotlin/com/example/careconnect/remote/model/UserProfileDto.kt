@@ -4,6 +4,7 @@ import com.example.careconnect.domain.model.UserProfile
 import dev.gitlive.firebase.firestore.Timestamp
 import kotlinx.serialization.Serializable
 
+// Profil unter users/{uid} in Firestore
 @Serializable
 data class UserProfileDto(
     val firstName: String? = null,
@@ -17,6 +18,8 @@ data class UserProfileDto(
     val activeOrgId: String? = null,
     val createdAt: Timestamp? = null
 )
+
+// Firestore -> App-Model
 fun UserProfileDto.toUserProfile(uid: String): UserProfile = UserProfile(
     uid = uid,
     firstName = firstName ?: "",
