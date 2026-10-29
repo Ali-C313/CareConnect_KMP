@@ -28,6 +28,7 @@ import com.example.careconnect.ui.theme.CareConnectTheme
 import com.example.careconnect.util.openSafely
 import com.example.careconnect.util.toDateTimeString
 
+// Details eines Termins mit Navigation
 @Composable
 fun AppointmentDetails(appointment: Appointment) {
     val uriHandler = LocalUriHandler.current
