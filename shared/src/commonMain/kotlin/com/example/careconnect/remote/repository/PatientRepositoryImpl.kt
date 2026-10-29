@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 
+// Patienten über Firestore
 class PatientRepositoryImpl(
     private val db: FirebaseFirestore,
     private val session: OrgSession
