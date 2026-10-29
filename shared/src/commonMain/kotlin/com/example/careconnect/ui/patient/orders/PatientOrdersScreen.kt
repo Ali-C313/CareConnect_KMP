@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Inbox
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -23,6 +25,7 @@ import com.example.careconnect.mock.repository.AuthRepositoryMock
 import com.example.careconnect.mock.repository.EmployeeRepositoryMock
 import com.example.careconnect.mock.repository.OrderRepositoryMock
 import com.example.careconnect.ui.components.CareTopBar
+import com.example.careconnect.ui.components.EmptyStateView
 import com.example.careconnect.ui.theme.CareConnectTheme
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -50,7 +53,11 @@ fun PatientOrdersScreen(
                 CircularProgressIndicator()
             }
 
-            activeOrder == null && openOrders.isEmpty() && doneOrders.isEmpty() -> EmptyOrders()
+            activeOrder == null && openOrders.isEmpty() && doneOrders.isEmpty() -> EmptyStateView(
+                icon = Icons.Default.Inbox,
+                title = tr("Noch keine Aufträge"),
+                message = tr("Hier erscheinen deine Aufträge, sobald einer angelegt wurde.")
+            )
 
             else -> LazyColumn(
                 modifier = Modifier.fillMaxSize(),
@@ -67,7 +74,7 @@ fun PatientOrdersScreen(
                     }
                 }
 
-                item { SectionTitle(tr("Offen"), openOrders.size) }
+                item { OrderSectionTitle(tr("Offen"), openOrders.size) }
                 if (openOrders.isEmpty()) {
                     item { EmptyHint(tr("Keine offenen Aufträge.")) }
                 } else {
@@ -76,7 +83,7 @@ fun PatientOrdersScreen(
                     }
                 }
 
-                item { SectionTitle(tr("Erledigt"), doneOrders.size) }
+                item { OrderSectionTitle(tr("Erledigt"), doneOrders.size) }
                 if (doneOrders.isEmpty()) {
                     item { EmptyHint(tr("Keine erledigten Aufträge.")) }
                 } else {
