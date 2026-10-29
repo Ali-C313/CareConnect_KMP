@@ -18,6 +18,7 @@ import com.example.careconnect.ui.components.SectionCard
 import com.example.careconnect.ui.theme.CareConnectTheme
 import com.example.careconnect.util.toDateTimeString
 
+// Kopf mit Titel und Status des Auftrags
 @Composable
 fun OrderHeaderCard(order: Order) {
     SectionCard {
