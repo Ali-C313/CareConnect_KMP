@@ -21,6 +21,7 @@ import kotlinx.coroutines.flow.map
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
+// Verordnungen über Firestore, liegen bei beiden Organisationen
 class PrescriptionRepositoryImpl(
     private val db: FirebaseFirestore,
     private val session: OrgSession
