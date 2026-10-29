@@ -3,6 +3,7 @@ package com.example.careconnect.ui.patient.settings
 import com.example.careconnect.domain.model.AddressSuggestion
 import com.example.careconnect.domain.model.Patient
 
+// Zustand des Profil-Formulars
 data class EditPatientUiState(
     val patient: Patient? = null,
     val addressSuggestions: List<AddressSuggestion> = emptyList(),
