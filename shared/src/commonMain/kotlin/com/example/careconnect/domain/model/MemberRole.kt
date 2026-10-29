@@ -2,6 +2,7 @@ package com.example.careconnect.domain.model
 
 import com.example.careconnect.i18n.tr
 
+// Rolle innerhalb der Organisation
 enum class MemberRole(val value: String, private val label: String) {
     ADMIN("admin", "Leitung"),
     STAFF("staff", "Mitarbeiter"),
