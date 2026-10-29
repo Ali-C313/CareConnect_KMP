@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 
+// Aufträge und Mitarbeiter für die Liste
 class OrdersViewModel(
     orderRepo: OrderRepository,
     employeeRepo: EmployeeRepository,
