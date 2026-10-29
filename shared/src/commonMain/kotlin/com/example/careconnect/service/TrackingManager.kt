@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 
 /**
  * Lädt den Standort des Mitarbeiters nach Firestore hoch (employeeLocations/{id}).
- * Wie in der iOS-App max. alle 10 Sekunden.
+ * Hochgeladen wird höchstens alle 10 Sekunden.
  */
 class TrackingManager(
     private val tracker: LocationTracker,
@@ -27,9 +27,6 @@ class TrackingManager(
 
     private val _isTracking = MutableStateFlow(false)
     val isTracking = _isTracking.asStateFlow()
-
-    private val _lastLocation = MutableStateFlow<Coordinate?>(null)
-    val lastLocation = _lastLocation.asStateFlow()
 
     fun start(employeeId: String) {
         if (_isTracking.value && this.employeeId == employeeId) return
@@ -58,8 +55,6 @@ class TrackingManager(
     }
 
     private fun onLocation(coordinate: Coordinate) {
-        _lastLocation.update { coordinate }
-
         val now = currentTimeMillis()
         if (now - lastUpload < 10_000) return
         lastUpload = now
