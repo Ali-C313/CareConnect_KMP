@@ -11,6 +11,7 @@ import kotlinx.coroutines.withContext
 import java.util.Locale
 import kotlin.coroutines.resume
 
+// Adresse -> Koordinate mit dem Android Geocoder
 class AndroidGeocoder(
     private val context: Context
 ) : PlatformGeocoder {
