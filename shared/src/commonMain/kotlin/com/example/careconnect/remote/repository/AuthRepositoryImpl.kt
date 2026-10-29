@@ -7,6 +7,7 @@ import dev.gitlive.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
+// Login und Registrierung über Firebase Auth
 class AuthRepositoryImpl(
     private val auth: FirebaseAuth
 ) : AuthRepository {
