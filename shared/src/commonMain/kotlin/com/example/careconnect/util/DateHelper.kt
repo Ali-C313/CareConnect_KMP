@@ -16,6 +16,7 @@ import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
 
+// Aktuelle Zeit in Millisekunden
 fun currentTimeMillis(): Long = Clock.System.now().toEpochMilliseconds()
 
 private fun Long.toLocalDateTime(): LocalDateTime =
@@ -86,5 +87,6 @@ fun recurringDates(startMillis: Long, weekdays: Set<Int>, weeks: Int): List<Long
         .map { date -> LocalDateTime(date, start.time).toInstant(timeZone).toEpochMilliseconds() }
 }
 
+// true, wenn der Zeitpunkt heute ist
 fun Long.isToday(): Boolean =
     toLocalDateTime().date == currentTimeMillis().toLocalDateTime().date
