@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 
+// Profil unter users/{uid} über Firestore
 class UserRepositoryImpl(
     private val db: FirebaseFirestore
 ) : UserRepository {
