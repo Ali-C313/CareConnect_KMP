@@ -5,6 +5,7 @@ import com.example.careconnect.domain.model.Prescription
 import com.example.careconnect.domain.model.PrescriptionStatus
 import kotlinx.coroutines.flow.Flow
 
+// Verordnungen zwischen Praxis und Pflegedienst
 interface PrescriptionRepository {
     // Eingehende und ausgehende Verordnungen der aktuellen Organisation
     fun getPrescriptions(): Flow<List<Prescription>>
