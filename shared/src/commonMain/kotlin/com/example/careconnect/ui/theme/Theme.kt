@@ -40,6 +40,7 @@ private val DarkColors = darkColorScheme(
     surfaceContainerHigh = Color(0xFF1B2124)
 )
 
+// Farben für hell und dunkel
 @Composable
 fun CareConnectTheme(
     darkTheme: Boolean,
