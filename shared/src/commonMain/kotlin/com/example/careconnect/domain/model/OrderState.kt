@@ -2,6 +2,7 @@ package com.example.careconnect.domain.model
 
 import com.example.careconnect.i18n.tr
 
+// Status eines Auftrags
 enum class OrderState(val value: String, private val label: String) {
     OFFEN("offen", "Offen"),
     AKTUELL("aktuell", "Aktuell"),
