@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import com.example.careconnect.i18n.tr
 import com.example.careconnect.ui.theme.CareConnectTheme
 
+// Karte zum Ändern des Passworts
 @Composable
 fun ChangePasswordCard(
     currentPassword: String,
