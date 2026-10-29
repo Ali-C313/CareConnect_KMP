@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 
+// Lädt die Patienten der Organisation
 class PatientsViewModel(
     patientRepo: PatientRepository
 ) : ViewModel() {
