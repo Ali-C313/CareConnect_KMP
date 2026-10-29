@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+// Lädt den Mitarbeiter und seine Dokumente
 @OptIn(ExperimentalCoroutinesApi::class)
 class EmployeeProfileViewModel(
     private val employeeRepo: EmployeeRepository
