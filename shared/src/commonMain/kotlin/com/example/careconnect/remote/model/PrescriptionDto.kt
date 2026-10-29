@@ -5,6 +5,7 @@ import com.example.careconnect.domain.model.PrescriptionStatus
 import dev.gitlive.firebase.firestore.Timestamp
 import kotlinx.serialization.Serializable
 
+// Verordnung in Firestore
 @Serializable
 data class PrescriptionDto(
     val fromOrgId: String? = null,
@@ -23,6 +24,8 @@ data class PrescriptionDto(
     val status: String? = null,
     val orderId: String? = null
 )
+
+// Firestore -> App-Model
 fun PrescriptionDto.toPrescription(id: String): Prescription = Prescription(
     id = id,
     fromOrgId = fromOrgId ?: "",
@@ -41,6 +44,8 @@ fun PrescriptionDto.toPrescription(id: String): Prescription = Prescription(
     status = PrescriptionStatus.fromValue(status),
     orderId = orderId ?: ""
 )
+
+// App-Model -> Firestore
 fun Prescription.toDto(): PrescriptionDto = PrescriptionDto(
     fromOrgId = fromOrgId,
     fromOrgName = fromOrgName,
