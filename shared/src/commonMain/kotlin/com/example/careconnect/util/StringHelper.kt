@@ -3,6 +3,7 @@ package com.example.careconnect.util
 import kotlin.math.ceil
 import kotlin.math.roundToInt
 
+// Kleine Hilfen für Texte
 object StringHelper {
 
     /** "Ali Chehab" -> "AC" */
