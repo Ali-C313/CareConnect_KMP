@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 
+// Patienten aus MockData für Previews
 class PatientRepositoryMock : PatientRepository {
 
     private val patients = MutableStateFlow(MockData.patients)
