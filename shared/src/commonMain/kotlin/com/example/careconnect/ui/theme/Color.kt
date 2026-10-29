@@ -2,7 +2,7 @@ package com.example.careconnect.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-// Farben aus CCDesign (iOS)
+// Farben der App
 val Accent = Color(0xFF1EAE98)
 val Info = Color(0xFF30B0C7)
 val Danger = Color(0xFFFF3B30)
@@ -17,7 +17,7 @@ val CardDark = Color(0xFF111416)
 val TextPrimaryDark = Color(0xFFF2F2F7)
 val TextSecondaryDark = Color(0xFFA1A1A6)
 
-// iOS-Systemfarben für Status
+// Statusfarben
 val StatusGreen = Color(0xFF34C759)
 val StatusOrange = Color(0xFFFF9500)
 val StatusYellow = Color(0xFFFFCC00)
