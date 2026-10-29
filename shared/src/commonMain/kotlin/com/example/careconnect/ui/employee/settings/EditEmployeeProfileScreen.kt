@@ -37,6 +37,7 @@ import com.example.careconnect.ui.components.SectionCard
 import com.example.careconnect.ui.theme.CareConnectTheme
 import org.koin.compose.viewmodel.koinViewModel
 
+// Eigenes Profil als Mitarbeiter bearbeiten
 @Composable
 fun EditEmployeeProfileScreen(
     onBack: () -> Unit,
