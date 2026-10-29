@@ -40,6 +40,6 @@ fun SignatureView(
 @Composable
 fun SignatureViewPreview() {
     CareConnectTheme(darkTheme = false) {
-        SignatureView(signature = "0.1,0.5;0.3,0.3;0.5,0.6;0.7,0.4;0.9,0.5")
+        SignatureView(signature = "100,500;300,300;500,600;700,400;900,500")
     }
 }
