@@ -8,6 +8,7 @@ import platform.CoreLocation.CLGeocoder
 import platform.CoreLocation.CLPlacemark
 import kotlin.coroutines.resume
 
+// Adresse -> Koordinate mit CLGeocoder
 class IosGeocoder : PlatformGeocoder {
 
     @OptIn(ExperimentalForeignApi::class)
