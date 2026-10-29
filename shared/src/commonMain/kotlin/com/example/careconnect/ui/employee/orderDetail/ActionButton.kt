@@ -14,9 +14,8 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.careconnect.ui.theme.CareConnectTheme
 import com.example.careconnect.ui.theme.StatusBlue
-import com.example.careconnect.ui.theme.color
-import com.example.careconnect.ui.theme.icon
 
+// Farbiger Button für Aktionen im Auftrag
 @Composable
 fun ActionButton(
     title: String,
