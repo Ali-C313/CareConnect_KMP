@@ -4,12 +4,15 @@ import com.example.careconnect.domain.model.Coordinate
 import com.example.careconnect.domain.model.RouteInfo
 import kotlinx.serialization.Serializable
 
+// Route aus der OSRM-Antwort
 @Serializable
 data class OsrmRoute(
     val distance: Double = 0.0,
     val duration: Double = 0.0,
     val geometry: OsrmGeometry = OsrmGeometry()
 )
+
+// API-Antwort -> App-Model
 fun OsrmRoute.toRouteInfo(): RouteInfo = RouteInfo(
     distanceMeters = distance,
     durationSeconds = duration,
