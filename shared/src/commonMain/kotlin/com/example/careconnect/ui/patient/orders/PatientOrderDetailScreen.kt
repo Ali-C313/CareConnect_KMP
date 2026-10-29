@@ -39,6 +39,7 @@ import com.example.careconnect.ui.theme.CareConnectTheme
 import com.example.careconnect.util.toDateTimeString
 import org.koin.compose.viewmodel.koinViewModel
 
+// Details eines Auftrags mit Live-Standort und Leistungsnachweis
 @Composable
 fun PatientOrderDetailScreen(
     orderId: String,
