@@ -4,6 +4,7 @@ import com.example.careconnect.domain.model.EmployeeDocument
 import dev.gitlive.firebase.firestore.Timestamp
 import kotlinx.serialization.Serializable
 
+// Dokument eines Mitarbeiters in Firestore
 @Serializable
 data class EmployeeDocumentDto(
     val id: String? = null,
@@ -12,6 +13,8 @@ data class EmployeeDocumentDto(
     val uploadedAt: Timestamp? = null,
     val storagePath: String? = null
 )
+
+// Firestore -> App-Model
 fun EmployeeDocumentDto.toEmployeeDocument(docId: String): EmployeeDocument = EmployeeDocument(
     id = docId,
     fileName = fileName ?: "Dokument.pdf",
