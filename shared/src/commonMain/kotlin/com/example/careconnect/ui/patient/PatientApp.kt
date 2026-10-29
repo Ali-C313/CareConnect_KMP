@@ -29,7 +29,7 @@ import com.example.careconnect.ui.patient.orders.PatientOrdersScreen
 import com.example.careconnect.ui.patient.settings.EditPatientProfileScreen
 import com.example.careconnect.ui.patient.settings.PatientSettingsScreen
 
-// Entspricht PatientTabView aus iOS
+// Tab-Navigation für Patienten
 @Composable
 fun PatientApp() {
     val navController = rememberNavController()
