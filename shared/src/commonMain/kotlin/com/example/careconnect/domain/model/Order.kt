@@ -2,6 +2,7 @@ package com.example.careconnect.domain.model
 
 import com.example.careconnect.i18n.tr
 
+// Auftrag bzw. Hausbesuch
 data class Order(
     val id: String,
     val state: OrderState = OrderState.OFFEN,
