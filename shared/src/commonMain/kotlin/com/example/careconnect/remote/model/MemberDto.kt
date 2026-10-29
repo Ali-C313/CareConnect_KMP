@@ -5,6 +5,7 @@ import com.example.careconnect.domain.model.MemberRole
 import dev.gitlive.firebase.firestore.Timestamp
 import kotlinx.serialization.Serializable
 
+// Mitglied in Firestore
 @Serializable
 data class MemberDto(
     val role: String? = null,
@@ -13,6 +14,8 @@ data class MemberDto(
     val inviteCode: String? = null,
     val joinedAt: Timestamp? = null
 )
+
+// Firestore -> App-Model
 fun MemberDto.toMember(uid: String): Member = Member(
     uid = uid,
     firstName = firstName ?: "",
