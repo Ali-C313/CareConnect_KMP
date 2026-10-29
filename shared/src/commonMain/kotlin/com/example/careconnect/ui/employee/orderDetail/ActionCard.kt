@@ -24,8 +24,6 @@ import com.example.careconnect.ui.theme.CareConnectTheme
 import com.example.careconnect.ui.theme.StatusBlue
 import com.example.careconnect.ui.theme.StatusGreen
 import com.example.careconnect.ui.theme.StatusRed
-import com.example.careconnect.ui.theme.color
-import com.example.careconnect.ui.theme.icon
 
 /**
  * Aktionen passend zum Status: annehmen, abschließen, bearbeiten, löschen.
