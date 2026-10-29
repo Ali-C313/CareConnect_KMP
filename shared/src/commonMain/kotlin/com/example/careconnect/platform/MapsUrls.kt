@@ -14,6 +14,7 @@ fun tourUrl(addresses: List<String>): String? {
         if (waypoints.isNotEmpty()) "&waypoints=$waypoints" else ""
 }
 
+// Sonderzeichen für die URL umwandeln
 private fun urlEncode(value: String): String = buildString {
     value.encodeToByteArray().forEach { byte ->
         val code = byte.toInt() and 0xFF
