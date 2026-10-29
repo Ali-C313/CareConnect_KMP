@@ -3,6 +3,7 @@ package com.example.careconnect.domain.repository
 import com.example.careconnect.domain.model.UserProfile
 import kotlinx.coroutines.flow.Flow
 
+// Profil unter users/{uid}
 interface UserRepository {
     // null, solange es kein Profil unter users/{uid} gibt
     fun observeProfile(uid: String): Flow<UserProfile?>
