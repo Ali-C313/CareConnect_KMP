@@ -23,6 +23,7 @@ import com.example.careconnect.ui.components.InfoRow
 import com.example.careconnect.ui.components.SectionCard
 import com.example.careconnect.ui.theme.CareConnectTheme
 
+// Karte mit den Arbeitszeiten
 @Composable
 fun WorkScheduleCard(employee: Employee) {
     val schedule = employee.workSchedule
