@@ -3,6 +3,7 @@ package com.example.careconnect.remote.model
 import com.example.careconnect.domain.model.EmergencyContact
 import kotlinx.serialization.Serializable
 
+// Notfallkontakt in Firestore
 @Serializable
 data class EmergencyContactDto(
     val name: String? = null,
@@ -12,6 +13,8 @@ data class EmergencyContactDto(
     val address: String? = null,
     val age: Int? = null
 )
+
+// Firestore -> App-Model
 fun EmergencyContactDto.toEmergencyContact(): EmergencyContact = EmergencyContact(
     name = name ?: "",
     relation = relation ?: "",
@@ -20,6 +23,8 @@ fun EmergencyContactDto.toEmergencyContact(): EmergencyContact = EmergencyContac
     address = address ?: "",
     age = age
 )
+
+// App-Model -> Firestore
 fun EmergencyContact.toDto(): EmergencyContactDto = EmergencyContactDto(
     name = name,
     relation = relation,
