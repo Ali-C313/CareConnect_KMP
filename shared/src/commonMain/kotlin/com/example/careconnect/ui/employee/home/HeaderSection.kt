@@ -40,6 +40,7 @@ import com.example.careconnect.ui.components.SectionCard
 import com.example.careconnect.ui.theme.CareConnectTheme
 import com.example.careconnect.ui.theme.color
 
+// Kopf der Startseite mit eigenem Status und Suche
 @Composable
 fun HeaderSection(
     status: StaffStatus,
@@ -105,7 +106,7 @@ fun HeaderSection(
 
             VerticalDivider(Modifier.padding(vertical = 6.dp))
 
-            // Suche öffnet eigenen Screen (wie das Sheet in iOS)
+            // Suche öffnet eigenen Screen
             Row(
                 modifier = Modifier
                     .weight(1f)
