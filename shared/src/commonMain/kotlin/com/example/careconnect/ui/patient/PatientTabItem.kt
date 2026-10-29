@@ -9,6 +9,7 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.example.careconnect.i18n.tr
 
+// Tabs unten im Patienten-Bereich
 enum class PatientTabItem(
     val route: PatientRoute,
     val icon: ImageVector
