@@ -27,8 +27,9 @@ import com.example.careconnect.util.StringHelper
 import com.example.careconnect.util.toDateString
 import io.github.vinceglb.filekit.name
 
+// Kopf mit Bild, Name und Rolle des Mitarbeiters
 @Composable
-fun ProfileHeader(employee: Employee) {
+fun EmployeeProfileHeader(employee: Employee) {
     SectionCard {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -81,8 +82,8 @@ fun ProfileHeader(employee: Employee) {
 
 @Preview
 @Composable
-fun ProfileHeaderPreview() {
+fun EmployeeProfileHeaderPreview() {
     CareConnectTheme(darkTheme = false) {
-        ProfileHeader(employee = MockData.employee)
+        EmployeeProfileHeader(employee = MockData.employee)
     }
 }
