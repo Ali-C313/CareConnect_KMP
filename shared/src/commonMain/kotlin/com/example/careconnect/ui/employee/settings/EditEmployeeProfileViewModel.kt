@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+// Lädt und speichert das eigene Mitarbeiterprofil
 class EditEmployeeProfileViewModel(
     private val employeeRepo: EmployeeRepository,
     private val storageRepo: StorageRepository,
