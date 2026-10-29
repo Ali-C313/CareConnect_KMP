@@ -20,6 +20,7 @@ import com.example.careconnect.mock.MockData
 import com.example.careconnect.ui.components.SectionCard
 import com.example.careconnect.ui.theme.CareConnectTheme
 
+// Zeile für einen Suchtreffer
 @Composable
 fun ResultRow(
     icon: ImageVector,
