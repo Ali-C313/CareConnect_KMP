@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 
+// Live-Standort über Firestore
 class LocationRepositoryImpl(
     private val db: FirebaseFirestore,
     private val session: OrgSession
