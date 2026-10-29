@@ -1,5 +1,6 @@
 package com.example.careconnect.ui.auth
 
+// Zustand des Login-Formulars
 data class LoginUiState(
     val email: String = "",
     val password: String = "",
