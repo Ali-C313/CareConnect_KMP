@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-// Neuer Auftrag oder Auftrag bearbeiten (NewOrderSheet in iOS)
+// Neuer Auftrag oder Auftrag bearbeiten
 class NewOrderViewModel(
     private val orderRepo: OrderRepository,
     private val authRepo: AuthRepository,
