@@ -20,7 +20,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.careconnect.domain.model.Order
-import com.example.careconnect.domain.model.OrderState
 import com.example.careconnect.i18n.tr
 import com.example.careconnect.mock.MockData
 import com.example.careconnect.ui.components.SectionCard
@@ -44,7 +43,7 @@ fun OrderCard(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "📋 ${order.patientName.ifEmpty { "Unbekannt" }}",
+                text = "📋 ${order.patientName.ifEmpty { tr("Unbekannt") }}",
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.weight(1f),
                 maxLines = 1,
