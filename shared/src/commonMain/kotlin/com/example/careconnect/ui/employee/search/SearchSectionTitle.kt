@@ -9,8 +9,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.careconnect.ui.theme.CareConnectTheme
 
+// Überschrift über einer Gruppe von Treffern
 @Composable
-fun SectionTitle(title: String) {
+fun SearchSectionTitle(title: String) {
     Text(
         text = title,
         style = MaterialTheme.typography.titleSmall,
@@ -21,8 +22,8 @@ fun SectionTitle(title: String) {
 
 @Preview
 @Composable
-fun SectionTitlePreview() {
+fun SearchSectionTitlePreview() {
     CareConnectTheme(darkTheme = false) {
-        SectionTitle(title = "Patienten")
+        SearchSectionTitle(title = "Patienten")
     }
 }
