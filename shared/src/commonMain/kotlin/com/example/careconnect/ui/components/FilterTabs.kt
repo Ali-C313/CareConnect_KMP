@@ -21,7 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 /**
- * Segment-Auswahl wie der Picker in iOS (z.B. Offen / Aktuell / Erledigt).
+ * Segment-Auswahl, z.B. Offen / Aktuell / Erledigt.
  */
 @Composable
 fun <T> FilterTabs(
