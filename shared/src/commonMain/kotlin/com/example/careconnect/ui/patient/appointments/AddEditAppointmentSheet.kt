@@ -51,6 +51,8 @@ import com.example.careconnect.ui.theme.CareConnectTheme
 
 // get(), damit die Liste beim Sprachwechsel neu übersetzt wird
 private val defaultBringItems get() = listOf(tr("Ausweis"), tr("Krankenkassenkarte"), tr("Überweisung"), tr("Bericht"))
+
+// Formular für einen neuen oder bestehenden Termin
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddEditAppointmentSheet(
