@@ -73,7 +73,7 @@ val appModule = module {
     single { Firebase.firestore }
     single { Firebase.storage }
 
-    // Ktor für Geoapify
+    // Ktor für Geoapify und OSRM
     single {
         HttpClient {
             install(ContentNegotiation) {
