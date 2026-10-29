@@ -9,7 +9,6 @@ import com.example.careconnect.domain.model.Order
 import com.example.careconnect.domain.model.OrderState
 import com.example.careconnect.domain.model.Patient
 import com.example.careconnect.domain.model.RouteInfo
-import com.example.careconnect.domain.model.isSameRouteRequest
 import com.example.careconnect.domain.repository.AuthRepository
 import com.example.careconnect.domain.repository.EmployeeRepository
 import com.example.careconnect.domain.repository.GeoRepository
@@ -17,6 +16,7 @@ import com.example.careconnect.domain.repository.LocationRepository
 import com.example.careconnect.domain.repository.OrderRepository
 import com.example.careconnect.domain.repository.PatientRepository
 import com.example.careconnect.i18n.tr
+import com.example.careconnect.util.isSameRouteRequest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -33,6 +33,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+// Lädt Auftrag, Patient und Route und ändert den Status
 @OptIn(ExperimentalCoroutinesApi::class)
 class OrderDetailViewModel(
     private val orderRepo: OrderRepository,
@@ -98,7 +99,7 @@ class OrderDetailViewModel(
         .flatMapLatest { id -> if (id.isEmpty()) flowOf(null) else locationRepo.observeEmployeeLocation(id) }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
-    // ETA und Entfernung (statt MKDirections)
+    // Ankunftszeit und Entfernung zum Patienten
     val route: StateFlow<RouteInfo?> = combine(employeeCoordinate, patientCoordinate) { employee, patient ->
         employee to patient
     }
