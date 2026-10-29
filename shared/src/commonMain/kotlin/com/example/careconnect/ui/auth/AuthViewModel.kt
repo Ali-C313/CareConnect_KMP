@@ -27,6 +27,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
+// Beobachtet Login, Profil und Mitgliedschaft und startet Tracking und Benachrichtigungen
 @OptIn(ExperimentalCoroutinesApi::class)
 class AuthViewModel(
     private val authRepo: AuthRepository,
