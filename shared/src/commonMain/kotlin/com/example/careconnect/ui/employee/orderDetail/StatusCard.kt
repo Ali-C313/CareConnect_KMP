@@ -24,6 +24,7 @@ import com.example.careconnect.ui.theme.color
 import com.example.careconnect.ui.theme.icon
 import com.example.careconnect.util.toDateTimeString
 
+// Aktueller Status und zuständiger Mitarbeiter
 @Composable
 fun StatusCard(
     order: Order,
