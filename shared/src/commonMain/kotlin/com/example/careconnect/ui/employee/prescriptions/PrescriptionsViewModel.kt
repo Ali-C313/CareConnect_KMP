@@ -30,6 +30,7 @@ import kotlinx.coroutines.launch
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
+// Verordnungen laden, anlegen und beantworten
 class PrescriptionsViewModel(
     private val prescriptionRepo: PrescriptionRepository,
     private val orderRepo: OrderRepository,
