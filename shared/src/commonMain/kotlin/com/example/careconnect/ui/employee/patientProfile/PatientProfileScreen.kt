@@ -43,6 +43,7 @@ import com.example.careconnect.ui.theme.CareConnectTheme
 import com.example.careconnect.util.openSafely
 import org.koin.compose.viewmodel.koinViewModel
 
+// Profil eines Patienten für Mitarbeiter
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PatientProfileScreen(
@@ -80,7 +81,7 @@ fun PatientProfileScreen(
                     .padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                ProfileHeader(
+                PatientProfileHeader(
                     patient = current,
                     onEmergencyClick = { showContactSheet = true }
                 )
