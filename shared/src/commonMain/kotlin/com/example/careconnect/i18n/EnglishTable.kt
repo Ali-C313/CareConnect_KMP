@@ -355,7 +355,7 @@ internal val englishTable: Map<String, String> = mapOf(
     "ab {0}" to "from {0}",
     "{0} wählen" to "Choose {0}",
     "{0} Std/Woche" to "{0} hrs/week",
-    // Texte aus dem alten Strings-Interface
+    // Einstellungen, Aufträge und Live-Standort
     "Hausbesuche" to "House calls",
     "Medizin" to "Medicine",
     "Einstellungen" to "Settings",
@@ -389,7 +389,6 @@ internal val englishTable: Map<String, String> = mapOf(
     "Hier erscheinen deine Aufträge, sobald einer angelegt wurde." to "Your orders will appear here as soon as one is created.",
     "Keine offenen Aufträge." to "No open orders.",
     "Keine erledigten Aufträge." to "No completed orders.",
-    "Wartet auf einen Mitarbeiter" to "Waiting for a caregiver",
     "Dieser Auftrag existiert nicht mehr." to "This order no longer exists.",
     "Erstellt" to "Created",
     "Kontaktieren" to "Contact",
