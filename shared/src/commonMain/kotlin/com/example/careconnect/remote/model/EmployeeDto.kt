@@ -5,6 +5,7 @@ import com.example.careconnect.domain.model.StaffStatus
 import dev.gitlive.firebase.firestore.Timestamp
 import kotlinx.serialization.Serializable
 
+// Mitarbeiter in Firestore
 @Serializable
 data class EmployeeDto(
     val uid: String? = null,
@@ -18,6 +19,8 @@ data class EmployeeDto(
     val workSchedule: WorkScheduleDto? = null,
     val inviteCode: String? = null
 )
+
+// Firestore -> App-Model
 fun EmployeeDto.toEmployee(id: String): Employee = Employee(
     id = id,
     firstName = firstName ?: "",
