@@ -355,7 +355,7 @@ internal val spanishTable: Map<String, String> = mapOf(
     "ab {0}" to "desde {0}",
     "{0} wählen" to "Elegir {0}",
     "{0} Std/Woche" to "{0} h/semana",
-    // Texte aus dem alten Strings-Interface
+    // Einstellungen, Aufträge und Live-Standort
     "Hausbesuche" to "Visitas",
     "Medizin" to "Medicinas",
     "Einstellungen" to "Ajustes",
@@ -389,7 +389,6 @@ internal val spanishTable: Map<String, String> = mapOf(
     "Hier erscheinen deine Aufträge, sobald einer angelegt wurde." to "Tus encargos aparecerán aquí en cuanto se cree uno.",
     "Keine offenen Aufträge." to "No hay encargos abiertos.",
     "Keine erledigten Aufträge." to "No hay encargos completados.",
-    "Wartet auf einen Mitarbeiter" to "Esperando a un cuidador",
     "Dieser Auftrag existiert nicht mehr." to "Este encargo ya no existe.",
     "Erstellt" to "Creado",
     "Kontaktieren" to "Contactar",
