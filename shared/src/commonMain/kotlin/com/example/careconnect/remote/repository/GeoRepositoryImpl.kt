@@ -3,7 +3,6 @@ package com.example.careconnect.remote.repository
 import com.example.careconnect.domain.model.AddressSuggestion
 import com.example.careconnect.domain.model.Coordinate
 import com.example.careconnect.domain.model.RouteInfo
-import com.example.careconnect.domain.model.distanceTo
 import com.example.careconnect.domain.repository.GeoRepository
 import com.example.careconnect.platform.PlatformGeocoder
 import com.example.careconnect.remote.Secrets
@@ -13,6 +12,7 @@ import com.example.careconnect.remote.model.OsrmResponse
 import com.example.careconnect.remote.model.toAddressSuggestion
 import com.example.careconnect.remote.model.toCoordinate
 import com.example.careconnect.remote.model.toRouteInfo
+import com.example.careconnect.util.distanceTo
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
