@@ -4,6 +4,7 @@ import com.example.careconnect.domain.model.Membership
 import com.example.careconnect.domain.model.UserProfile
 import com.example.careconnect.domain.model.UserRole
 
+// Zustand der Anmeldung, danach richtet sich, welcher Bereich angezeigt wird
 sealed class AuthState {
     object Loading : AuthState()
     object LoggedOut : AuthState()
