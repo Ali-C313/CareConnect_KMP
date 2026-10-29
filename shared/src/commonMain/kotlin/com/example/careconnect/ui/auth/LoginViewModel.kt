@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+// Logik für den Login
 class LoginViewModel(
     private val authRepo: AuthRepository
 ) : ViewModel() {
