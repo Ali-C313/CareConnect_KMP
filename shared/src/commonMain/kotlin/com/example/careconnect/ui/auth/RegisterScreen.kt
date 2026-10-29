@@ -38,12 +38,14 @@ import com.example.careconnect.mock.repository.StorageRepositoryMock
 import com.example.careconnect.mock.repository.UserRepositoryMock
 import com.example.careconnect.ui.components.AddressSearchField
 import com.example.careconnect.ui.components.CareTopBar
+import com.example.careconnect.ui.components.CareTextField
 import com.example.careconnect.ui.components.DateTimePickerField
 import com.example.careconnect.ui.components.ProfileImagePicker
 import com.example.careconnect.ui.components.SectionCard
 import com.example.careconnect.ui.theme.CareConnectTheme
 import org.koin.compose.viewmodel.koinViewModel
 
+// Registrierung mit Profilbild, Adresse und Zugangsdaten
 @Composable
 fun RegisterScreen(
     onBack: () -> Unit,
@@ -84,8 +86,8 @@ fun RegisterScreen(
 
             // Persönliche Daten
             SectionCard(title = tr("Persönliche Daten"), icon = Icons.Default.Person) {
-                RegisterTextField(tr("Vorname"), uiState.firstName, viewModel::onFirstNameChange, Icons.Default.Person)
-                RegisterTextField(tr("Nachname"), uiState.lastName, viewModel::onLastNameChange, Icons.Default.Person)
+                CareTextField(tr("Vorname"), uiState.firstName, viewModel::onFirstNameChange, icon = Icons.Default.Person)
+                CareTextField(tr("Nachname"), uiState.lastName, viewModel::onLastNameChange, icon = Icons.Default.Person)
 
                 DateTimePickerField(
                     label = tr("Geburtsdatum"),
@@ -103,37 +105,37 @@ fun RegisterScreen(
                     suggestions = uiState.addressSuggestions,
                     onSuggestionClick = viewModel::onSuggestionClick
                 )
-                RegisterTextField(tr("Stadt"), uiState.city, viewModel::onCityChange, Icons.Default.Apartment)
-                RegisterTextField(
+                CareTextField(tr("Stadt"), uiState.city, viewModel::onCityChange, icon = Icons.Default.Apartment)
+                CareTextField(
                     tr("Telefonnummer"),
                     uiState.phone,
                     viewModel::onPhoneChange,
-                    Icons.Default.Phone,
+                    icon = Icons.Default.Phone,
                     keyboardType = KeyboardType.Phone
                 )
             }
 
             // Zugangsdaten
             SectionCard(title = tr("Zugangsdaten"), icon = Icons.Default.Lock) {
-                RegisterTextField(
+                CareTextField(
                     tr("E-Mail-Adresse"),
                     uiState.email,
                     viewModel::onEmailChange,
-                    Icons.Default.Email,
+                    icon = Icons.Default.Email,
                     keyboardType = KeyboardType.Email
                 )
-                RegisterTextField(
+                CareTextField(
                     tr("Passwort"),
                     uiState.password,
                     viewModel::onPasswordChange,
-                    Icons.Default.Lock,
+                    icon = Icons.Default.Lock,
                     isPassword = true
                 )
-                RegisterTextField(
+                CareTextField(
                     tr("Passwort bestätigen"),
                     uiState.confirmPassword,
                     viewModel::onConfirmPasswordChange,
-                    Icons.Default.Lock,
+                    icon = Icons.Default.Lock,
                     isPassword = true
                 )
             }
