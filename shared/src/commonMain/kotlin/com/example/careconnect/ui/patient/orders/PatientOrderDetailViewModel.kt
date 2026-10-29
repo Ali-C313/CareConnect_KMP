@@ -7,7 +7,6 @@ import com.example.careconnect.domain.model.Employee
 import com.example.careconnect.domain.model.Order
 import com.example.careconnect.domain.model.OrderState
 import com.example.careconnect.domain.model.RouteInfo
-import com.example.careconnect.domain.model.isSameRouteRequest
 import com.example.careconnect.domain.repository.AuthRepository
 import com.example.careconnect.domain.repository.EmployeeRepository
 import com.example.careconnect.domain.repository.GeoRepository
@@ -15,6 +14,7 @@ import com.example.careconnect.domain.repository.LocationRepository
 import com.example.careconnect.domain.repository.OrderRepository
 import com.example.careconnect.domain.repository.PatientRepository
 import com.example.careconnect.domain.repository.SettingsRepository
+import com.example.careconnect.util.isSameRouteRequest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
