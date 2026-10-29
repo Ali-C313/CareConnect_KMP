@@ -49,6 +49,7 @@ import com.example.careconnect.ui.theme.CareConnectTheme
 import com.example.careconnect.ui.theme.StatusRed
 import org.koin.compose.viewmodel.koinViewModel
 
+// Mitglieder, Einladungen und Anfragen verwalten (nur Leitung)
 @Composable
 fun ManageOrganizationScreen(
     onBack: () -> Unit,
