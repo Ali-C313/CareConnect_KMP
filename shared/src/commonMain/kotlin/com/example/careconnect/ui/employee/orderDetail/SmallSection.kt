@@ -17,8 +17,8 @@ import androidx.compose.ui.unit.dp
 import com.example.careconnect.mock.MockData
 import com.example.careconnect.ui.theme.CareConnectTheme
 import com.example.careconnect.ui.theme.StatusOrange
-import com.example.careconnect.ui.theme.icon
 
+// Kleiner Abschnitt mit Icon, Titel und Text
 @Composable
 fun SmallSection(
     icon: ImageVector,
