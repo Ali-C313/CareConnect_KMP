@@ -11,6 +11,7 @@ import com.example.careconnect.ui.settings.SettingsViewModel
 import com.example.careconnect.ui.theme.CareConnectTheme
 import org.koin.compose.viewmodel.koinViewModel
 
+// Startpunkt der gemeinsamen UI für Android und iOS
 @Composable
 fun App() {
     val settingsViewModel: SettingsViewModel = koinViewModel()
