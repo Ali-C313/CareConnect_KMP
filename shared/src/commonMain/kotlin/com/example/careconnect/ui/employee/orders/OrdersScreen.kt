@@ -46,6 +46,7 @@ import com.example.careconnect.ui.theme.CareConnectTheme
 import com.example.careconnect.ui.theme.Info
 import org.koin.compose.viewmodel.koinViewModel
 
+// Liste aller Aufträge mit Filter nach Status
 @Composable
 fun OrdersScreen(
     onOrderClick: (String) -> Unit,
@@ -94,7 +95,7 @@ fun OrdersScreen(
             ) {
                 items(orders, key = { it.id }) { order ->
                     val employeeName = employees.firstOrNull { it.id == order.employeeId }?.name
-                        ?: if (order.employeeId.isEmpty()) tr("Noch offen") else order.employeeId
+                        ?: if (order.employeeId.isEmpty()) tr("Noch offen") else tr("Unbekannt")
                     OrderCard(
                         order = order,
                         employeeName = employeeName,
