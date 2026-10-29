@@ -2,6 +2,7 @@ package com.example.careconnect.domain.model
 
 import com.example.careconnect.i18n.tr
 
+// Status einer Verordnung
 enum class PrescriptionStatus(val value: String, private val label: String) {
     OFFEN("offen", "Offen"),
     ANGENOMMEN("angenommen", "Übernommen"),
