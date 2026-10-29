@@ -31,7 +31,6 @@ import androidx.compose.ui.unit.dp
 import com.example.careconnect.i18n.tr
 import com.example.careconnect.mock.MockData
 import com.example.careconnect.ui.components.CareTextField
-import com.example.careconnect.ui.components.SignaturePad
 import com.example.careconnect.ui.components.SignatureStrokes
 import com.example.careconnect.ui.components.encodeSignature
 import com.example.careconnect.ui.theme.CareConnectTheme
