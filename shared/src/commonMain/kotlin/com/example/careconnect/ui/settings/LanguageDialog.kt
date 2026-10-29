@@ -18,6 +18,7 @@ import com.example.careconnect.i18n.AppLanguage
 import com.example.careconnect.i18n.tr
 import com.example.careconnect.ui.theme.CareConnectTheme
 
+// Dialog zur Auswahl der Sprache
 @Composable
 fun LanguageDialog(
     selected: AppLanguage,
