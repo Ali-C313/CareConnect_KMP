@@ -27,10 +27,10 @@ import com.example.careconnect.ui.theme.CareConnectTheme
 import com.example.careconnect.ui.theme.StatusOrange
 import com.example.careconnect.ui.theme.StatusPurple
 import com.example.careconnect.ui.theme.StatusRed
-import com.example.careconnect.ui.theme.icon
 import com.example.careconnect.util.StringHelper
 import com.example.careconnect.util.openSafely
 
+// Kontakt und Gesundheitsdaten des Patienten
 @Composable
 fun PatientCard(patient: Patient) {
     val uriHandler = LocalUriHandler.current
