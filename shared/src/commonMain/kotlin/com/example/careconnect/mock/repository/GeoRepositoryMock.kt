@@ -6,6 +6,7 @@ import com.example.careconnect.domain.model.RouteInfo
 import com.example.careconnect.domain.repository.GeoRepository
 import com.example.careconnect.mock.MockData
 
+// Feste Adressen und Routen für Previews
 class GeoRepositoryMock : GeoRepository {
 
     override suspend fun searchAddress(query: String): Result<List<AddressSuggestion>> = runCatching {
