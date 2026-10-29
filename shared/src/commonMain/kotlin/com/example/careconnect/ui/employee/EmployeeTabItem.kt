@@ -10,6 +10,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import com.example.careconnect.domain.model.OrganizationType
 import com.example.careconnect.i18n.tr
 
+// Tabs unten im Mitarbeiter-Bereich
 enum class EmployeeTabItem(
     val route: EmployeeRoute,
     val icon: ImageVector
