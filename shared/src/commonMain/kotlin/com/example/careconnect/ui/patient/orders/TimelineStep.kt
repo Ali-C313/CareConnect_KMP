@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.example.careconnect.ui.theme.CareConnectTheme
 import com.example.careconnect.ui.theme.StatusGreen
 
+// Ein Schritt im Verlauf des Auftrags
 @Composable
 fun TimelineStep(title: String, subtitle: String?, done: Boolean) {
     Row(
