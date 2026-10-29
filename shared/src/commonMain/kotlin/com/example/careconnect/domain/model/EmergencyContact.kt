@@ -1,5 +1,6 @@
 package com.example.careconnect.domain.model
 
+// Notfallkontakt eines Patienten
 data class EmergencyContact(
     val name: String = "",
     val relation: String = "",
