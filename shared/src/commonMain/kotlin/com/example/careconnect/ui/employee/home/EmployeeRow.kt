@@ -21,6 +21,7 @@ import com.example.careconnect.ui.theme.CareConnectTheme
 import com.example.careconnect.ui.theme.color
 import com.example.careconnect.util.StringHelper
 
+// Zeile für einen Kollegen mit Status
 @Composable
 fun EmployeeRow(
     employee: Employee,
