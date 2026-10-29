@@ -6,6 +6,7 @@ import com.example.careconnect.domain.model.OrganizationType
 import dev.gitlive.firebase.firestore.Timestamp
 import kotlinx.serialization.Serializable
 
+// Einladung in Firestore
 @Serializable
 data class InviteDto(
     val orgId: String? = null,
@@ -15,6 +16,8 @@ data class InviteDto(
     val createdBy: String? = null,
     val createdAt: Timestamp? = null
 )
+
+// Firestore -> App-Model
 fun InviteDto.toInvite(code: String): Invite? {
     val id = orgId ?: return null
     return Invite(
