@@ -1,4 +1,4 @@
-package com.example.careconnect.ui.components
+package com.example.careconnect.ui.employee.orderDetail
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
@@ -29,6 +29,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import com.example.careconnect.i18n.tr
+import com.example.careconnect.ui.components.SignatureStrokes
+import com.example.careconnect.ui.components.drawSignatureStroke
 import com.example.careconnect.ui.theme.CareConnectTheme
 
 /**
