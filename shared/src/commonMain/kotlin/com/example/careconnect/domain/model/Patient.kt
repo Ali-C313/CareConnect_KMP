@@ -2,6 +2,7 @@ package com.example.careconnect.domain.model
 
 import com.example.careconnect.i18n.tr
 
+// Patient mit Kontakt- und Gesundheitsdaten
 data class Patient(
     val id: String,
     val firstName: String = "",
