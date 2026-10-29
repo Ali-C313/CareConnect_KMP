@@ -10,6 +10,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import com.example.careconnect.i18n.tr
 
+// Zeigt lokale Benachrichtigungen auf Android
 class AndroidNotifier(
     private val context: Context
 ) : Notifier {
