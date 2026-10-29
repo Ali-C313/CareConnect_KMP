@@ -24,6 +24,7 @@ import com.example.careconnect.ui.components.LoadingView
 import com.example.careconnect.ui.theme.CareConnectTheme
 import org.koin.compose.viewmodel.koinViewModel
 
+// Liste aller Patienten
 @Composable
 fun PatientsScreen(
     onPatientClick: (String) -> Unit,
