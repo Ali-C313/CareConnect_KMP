@@ -5,6 +5,7 @@ import com.example.careconnect.domain.model.OrderState
 import dev.gitlive.firebase.firestore.Timestamp
 import kotlinx.serialization.Serializable
 
+// Auftrag in Firestore
 @Serializable
 data class OrderDto(
     val id: String? = null,
@@ -20,6 +21,8 @@ data class OrderDto(
     val createdAt: Timestamp? = null,
     val report: CompletionReportDto? = null
 )
+
+// Firestore -> App-Model
 fun OrderDto.toOrder(docId: String): Order = Order(
     id = docId,
     state = OrderState.fromValue(state),
@@ -33,6 +36,8 @@ fun OrderDto.toOrder(docId: String): Order = Order(
     createdAt = createdAt?.toMillis(),
     report = report?.toReport()
 )
+
+// App-Model -> Firestore
 fun Order.toDto(): OrderDto = OrderDto(
     id = id,
     state = state.value,
