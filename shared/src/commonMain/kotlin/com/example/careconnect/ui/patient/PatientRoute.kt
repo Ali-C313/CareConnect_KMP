@@ -4,6 +4,7 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Settings
 import kotlinx.serialization.Serializable
 
+// Routen im Patienten-Bereich
 @Serializable
 sealed interface PatientRoute {
     @Serializable
