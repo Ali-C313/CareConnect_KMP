@@ -35,6 +35,7 @@ import com.example.careconnect.ui.components.EmptyStateView
 import com.example.careconnect.ui.theme.CareConnectTheme
 import org.koin.compose.viewmodel.koinViewModel
 
+// Termine des Patienten
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppointmentsScreen(
