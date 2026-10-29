@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 
+// Termine über Firestore
 class AppointmentRepositoryImpl(
     private val db: FirebaseFirestore,
     private val session: OrgSession
