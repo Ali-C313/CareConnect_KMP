@@ -355,7 +355,7 @@ internal val arabicTable: Map<String, String> = mapOf(
     "ab {0}" to "اعتبارًا من {0}",
     "{0} wählen" to "اختر {0}",
     "{0} Std/Woche" to "{0} ساعة/أسبوع",
-    // Texte aus dem alten Strings-Interface
+    // Einstellungen, Aufträge und Live-Standort
     "Hausbesuche" to "الزيارات المنزلية",
     "Medizin" to "الأدوية",
     "Einstellungen" to "الإعدادات",
@@ -389,7 +389,6 @@ internal val arabicTable: Map<String, String> = mapOf(
     "Hier erscheinen deine Aufträge, sobald einer angelegt wurde." to "ستظهر طلباتك هنا بمجرد إنشاء طلب.",
     "Keine offenen Aufträge." to "لا توجد طلبات مفتوحة.",
     "Keine erledigten Aufträge." to "لا توجد طلبات مكتملة.",
-    "Wartet auf einen Mitarbeiter" to "بانتظار موظف",
     "Dieser Auftrag existiert nicht mehr." to "هذا الطلب لم يعد موجودًا.",
     "Erstellt" to "تم الإنشاء",
     "Kontaktieren" to "تواصل",
