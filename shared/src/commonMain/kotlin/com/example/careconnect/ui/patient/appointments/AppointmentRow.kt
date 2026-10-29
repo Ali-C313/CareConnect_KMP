@@ -26,6 +26,7 @@ import com.example.careconnect.ui.theme.StatusBlue
 import com.example.careconnect.ui.theme.StatusRed
 import com.example.careconnect.util.toDateTimeString
 
+// Zeile für einen Termin
 @Composable
 fun AppointmentRow(
     appointment: Appointment,
