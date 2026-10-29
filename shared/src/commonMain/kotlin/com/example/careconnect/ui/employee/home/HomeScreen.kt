@@ -34,15 +34,14 @@ import com.example.careconnect.mock.repository.OrderRepositoryMock
 import com.example.careconnect.mock.repository.PatientRepositoryMock
 import com.example.careconnect.platform.tourUrl
 import com.example.careconnect.ui.components.CareTopBar
-import com.example.careconnect.ui.components.StatTile
 import com.example.careconnect.ui.theme.CareConnectTheme
 import com.example.careconnect.ui.theme.StatusBlue
 import com.example.careconnect.ui.theme.StatusGreen
 import com.example.careconnect.ui.theme.StatusOrange
-import com.example.careconnect.ui.theme.color
 import com.example.careconnect.util.openSafely
 import org.koin.compose.viewmodel.koinViewModel
 
+// Startseite für Mitarbeiter mit Zahlen, Tour und Kollegen
 @Composable
 fun HomeScreen(
     onSearchClick: () -> Unit,
