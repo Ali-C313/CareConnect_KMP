@@ -45,6 +45,7 @@ import com.example.careconnect.ui.theme.CareConnectTheme
 import com.example.careconnect.ui.theme.StatusOrange
 import com.example.careconnect.ui.theme.StatusRed
 
+// Formular für eine neue Verordnung
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewPrescriptionSheet(
