@@ -41,7 +41,6 @@ import com.example.careconnect.mock.repository.AuthRepositoryMock
 import com.example.careconnect.mock.repository.OrderRepositoryMock
 import com.example.careconnect.mock.repository.PatientRepositoryMock
 import com.example.careconnect.ui.components.CareTopBar
-import com.example.careconnect.ui.components.EmergencyButton
 import com.example.careconnect.ui.theme.Accent
 import com.example.careconnect.ui.theme.CareConnectTheme
 import com.example.careconnect.ui.theme.StatusRed
@@ -49,6 +48,7 @@ import com.example.careconnect.util.StringHelper
 import com.example.careconnect.util.openSafely
 import org.koin.compose.viewmodel.koinViewModel
 
+// Startseite für Patienten mit Notruf
 @Composable
 fun PatientHomeScreen(
     onOrdersClick: () -> Unit,
