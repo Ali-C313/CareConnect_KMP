@@ -5,6 +5,7 @@ import com.example.careconnect.platform.toStorageData
 import dev.gitlive.firebase.storage.FirebaseStorage
 import dev.gitlive.firebase.storage.storageMetadata
 
+// Dateien über Firebase Storage
 class StorageRepositoryImpl(
     private val storage: FirebaseStorage
 ) : StorageRepository {
