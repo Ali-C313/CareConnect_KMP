@@ -43,7 +43,6 @@ import com.example.careconnect.ui.components.LoadingView
 import com.example.careconnect.ui.components.SectionCard
 import com.example.careconnect.ui.theme.CareConnectTheme
 import com.example.careconnect.ui.theme.StatusRed
-import com.example.careconnect.ui.theme.color
 import com.example.careconnect.util.openSafely
 import io.github.vinceglb.filekit.dialogs.FileKitType
 import io.github.vinceglb.filekit.dialogs.compose.rememberFilePickerLauncher
@@ -52,6 +51,7 @@ import io.github.vinceglb.filekit.readBytes
 import kotlinx.coroutines.launch
 import org.koin.compose.viewmodel.koinViewModel
 
+// Profil eines Mitarbeiters mit Arbeitszeiten und Dokumenten
 @Composable
 fun EmployeeProfileScreen(
     employeeId: String,
@@ -67,7 +67,7 @@ fun EmployeeProfileScreen(
     val uriHandler = LocalUriHandler.current
     val scope = rememberCoroutineScope()
 
-    // PDF auswählen (fileImporter in iOS)
+    // PDF auswählen und hochladen
     val pdfLauncher = rememberFilePickerLauncher(type = FileKitType.File("pdf")) { file ->
         if (file != null) {
             scope.launch {
@@ -106,7 +106,7 @@ fun EmployeeProfileScreen(
                     .padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                ProfileHeader(current)
+                EmployeeProfileHeader(current)
                 WorkScheduleCard(current)
 
                 SectionCard {
