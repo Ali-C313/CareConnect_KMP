@@ -1,4 +1,4 @@
-package com.example.careconnect.ui.components
+package com.example.careconnect.ui.employee.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
