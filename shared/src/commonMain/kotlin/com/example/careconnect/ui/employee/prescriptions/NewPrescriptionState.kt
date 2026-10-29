@@ -2,6 +2,7 @@ package com.example.careconnect.ui.employee.prescriptions
 
 import com.example.careconnect.util.currentTimeMillis
 
+// Zustand des Verordnungs-Formulars
 data class NewPrescriptionState(
     val patientId: String = "",
     val toOrgId: String = "",
