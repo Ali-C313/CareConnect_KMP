@@ -43,6 +43,7 @@ import com.example.careconnect.ui.theme.CareConnectTheme
 import com.example.careconnect.ui.theme.StatusRed
 import org.koin.compose.viewmodel.koinViewModel
 
+// Details eines Auftrags mit Karte, Status und Aktionen
 @Composable
 fun OrderDetailScreen(
     orderId: String,
